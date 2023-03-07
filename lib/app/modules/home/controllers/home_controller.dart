@@ -229,23 +229,15 @@ class HomeController extends GetxController {
     casual = genreCasual();
     simulation = genreSimulation();
     puzzle = genrePuzzle();
-    Future.delayed(
-        const Duration(milliseconds: 10), () => arcade = genreArcade());
-    Future.delayed(
-        const Duration(milliseconds: 10), () => platformer = genrePlatformer());
-    Future.delayed(
-        const Duration(milliseconds: 10), () => racing = genreRacing());
-    Future.delayed(const Duration(milliseconds: 10), () => mmo = genreMMO());
-    Future.delayed(
-        const Duration(milliseconds: 10), () => sport = genreSport());
-    Future.delayed(
-        const Duration(milliseconds: 10), () => fighting = genreFighting());
-    Future.delayed(
-        const Duration(milliseconds: 10), () => family = genreFamily());
-    Future.delayed(
-        const Duration(milliseconds: 10), () => board = genreBoard());
-    Future.delayed(const Duration(milliseconds: 10),
-        () => educational = genreEducational());
-    Future.delayed(const Duration(milliseconds: 10), () => card = genreCard());
+ arcade = genreArcade();
+     platformer = genrePlatformer();
+    racing = genreRacing();
+     mmo = genreMMO();
+     sport = genreSport();
+   fighting = genreFighting();
+    family = genreFamily();
+   board = genreBoard();
+   educational = genreEducational();
+    card = genreCard();
   }
 }
