@@ -122,17 +122,15 @@ class DetailGameView extends GetView<DetailGameController> {
                                       padding: EdgeInsets.all(8.0),
                                       child: Text("Publisher"),
                                     ),
-                                    for (var publisher
-                                        in snapshot.data!.publishers!)
-                                      Wrap(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Text(
-                                                "${snapshot.data!.publishers![index].name}"),
-                                          ),
-                                        ],
-                                      ),
+                                    Wrap(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Text(
+                                              "${snapshot.data!.publishers![0].name}"),
+                                        ),
+                                      ],
+                                    ),
                                   ]),
                                   TableRow(children: [
                                     const Padding(
@@ -143,7 +141,7 @@ class DetailGameView extends GetView<DetailGameController> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Text(
-                                          "${snapshot.data!.genres![index].name}"),
+                                          "${snapshot.data!.genres![0].name}"),
                                     )
                                   ])
                                 ],
