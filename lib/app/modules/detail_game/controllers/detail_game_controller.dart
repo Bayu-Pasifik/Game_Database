@@ -1,16 +1,20 @@
+import 'package:game_database/app/data/models/archievement.dart';
 import 'package:game_database/app/data/models/detail_game.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/data/models/screenshot_game.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
+import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DetailGameController extends GetxController {
   RefreshController sameRefresh = RefreshController(initialRefresh: true);
+  RefreshController archieveRefresh = RefreshController(initialRefresh: true);
   var hal = 1.obs;
+  var halArchive = 1.obs;
   String? next = '';
+  String? nextArchivment = '';
   // ! details
   String apikey = "7a395681502b437d8cbc489ebee68c6c";
   Future<DetailGame> details(int id) async {
@@ -31,7 +35,6 @@ class DetailGameController extends GetxController {
     var response = await http.get(url);
     var data = json.decode(response.body)["results"];
     var tempdata = data.map((e) => ScreenshotGame.fromJson(e)).toList();
-    print("isi details ${tempdata}");
     return tempdata;
   }
 
@@ -50,6 +53,26 @@ class DetailGameController extends GetxController {
     same.addAll(tempdata);
     update();
     return same;
+  }
+
+  List<dynamic> archievement = [];
+  // ! Archievement Series
+  Future<List<dynamic>> archievementGame(int id, int page) async {
+    Uri url = Uri.parse(
+        'https://api.rawg.io/api/games/$id/achievements?key=$apikey&page=$page');
+    var response = await http.get(url);
+    final data = json.decode(response.body)["results"];
+    nextArchivment = json.decode(response.body)["next"];
+    final tempdata = data.map((e) => ArchievementGame.fromJson(e)).toList();
+
+    update();
+    var archieve = <dynamic>{};
+    // archievement = tempdata.where((e) => archieve.addAll(e)).toList();
+    archievement = tempdata.where((element) => archieve.add(element)).toList();
+    archievement.addAll(tempdata);
+    update();
+    print("panjang archievement ${archievement.length}");
+    return archievement;
   }
 
   void refrshSimilar(int id) async {
@@ -71,6 +94,28 @@ class DetailGameController extends GetxController {
       return sameRefresh.loadComplete();
     } else {
       return sameRefresh.loadNoData();
+    }
+  }
+
+  void refreshArchieve(int id) async {
+    if (archieveRefresh.initialRefresh == true) {
+      halArchive.value = 1;
+      await archievementGame(id, halArchive.value);
+      update();
+      return archieveRefresh.refreshCompleted();
+    } else {
+      return archieveRefresh.refreshFailed();
+    }
+  }
+
+  void loadArchieve(int id) async {
+    if (nextArchivment != null) {
+      halArchive.value = halArchive.value + 1;
+      await archievementGame(id, halArchive.value);
+      update();
+      return archieveRefresh.loadComplete();
+    } else {
+      return archieveRefresh.loadNoData();
     }
   }
 }

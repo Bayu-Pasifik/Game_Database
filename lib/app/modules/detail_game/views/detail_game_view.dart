@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:game_database/app/data/models/archievement.dart';
 import 'package:game_database/app/data/models/detail_game.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/data/models/screenshot_game.dart';
@@ -134,18 +135,6 @@ class DetailGameView extends GetView<DetailGameController> {
                                       ],
                                     ),
                                   ]),
-                                  // TableRow(children: [
-                                  //   const Padding(
-                                  //     padding: EdgeInsets.all(8.0),
-                                  //     child: Text("Genre"),
-                                  //   ),
-                                  //   // for (var genre in snapshot.data!.genres!)
-                                  //   Padding(
-                                  //     padding: const EdgeInsets.all(8.0),
-                                  //     child: Text(
-                                  //         "${snapshot.data!.genres![0].name}"),
-                                  //   )
-                                  // ])
                                 ],
                               ),
                             ),
@@ -183,7 +172,7 @@ class DetailGameView extends GetView<DetailGameController> {
                         ),
                         SizedBox(
                           width: context.width,
-                          height: context.width,
+                          height: context.height / 0.8,
                           child: TabBarView(children: [
                             // ! about
                             Text(
@@ -201,10 +190,11 @@ class DetailGameView extends GetView<DetailGameController> {
                                       child: CircularProgressIndicator());
                                 }
                                 return GridView.builder(
+                                  padding: const EdgeInsets.all(10),
                                   gridDelegate:
                                       const SliverGridDelegateWithMaxCrossAxisExtent(
                                           maxCrossAxisExtent: 150,
-                                          childAspectRatio: 1 / 1.2,
+                                          childAspectRatio: 1 / 1.6,
                                           crossAxisSpacing: 10,
                                           mainAxisSpacing: 20),
                                   itemCount: snapshot.data?.length ?? 0,
@@ -252,7 +242,67 @@ class DetailGameView extends GetView<DetailGameController> {
                                 );
                               },
                             ),
-                            Text("Archievement"),
+                            // ! Achievement
+                            GetBuilder<DetailGameController>(
+                              builder: (c) {
+                                return SmartRefresher(
+                                  controller: c.archieveRefresh,
+                                  enablePullDown: true,
+                                  enablePullUp: true,
+                                  onLoading: () =>
+                                      c.loadArchieve(snapshot.data!.id!),
+                                  onRefresh: () =>
+                                      c.refreshArchieve(snapshot.data!.id!),
+                                  child: ListView.separated(
+                                      itemBuilder: (context, index) {
+                                        ArchievementGame archievementGame =
+                                            c.archievement[index];
+                                        return ListTile(
+                                          leading: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  "${archievementGame.image}",
+                                              imageBuilder:
+                                                  (context, imageProvider) =>
+                                                      Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8),
+                                                  image: DecorationImage(
+                                                      image: imageProvider,
+                                                      fit: BoxFit.cover),
+                                                ),
+                                              ),
+                                              progressIndicatorBuilder:
+                                                  (context, url,
+                                                          downloadProgress) =>
+                                                      Center(
+                                                child:
+                                                    CircularProgressIndicator(
+                                                        value: downloadProgress
+                                                            .progress),
+                                              ),
+                                              errorWidget:
+                                                  (context, url, error) =>
+                                                      const Icon(Icons.error),
+                                            ),
+                                          ),
+                                          title:
+                                              Text("${archievementGame.name}"),
+                                          subtitle: Text(
+                                              "${archievementGame.description}"),
+                                          isThreeLine: true,
+                                        );
+                                      },
+                                      separatorBuilder: (context, index) =>
+                                          const SizedBox(height: 10),
+                                      itemCount: c.archievement.length),
+                                );
+                              },
+                            ),
+                            // ! Similar
                             GetBuilder<DetailGameController>(
                               builder: (c) {
                                 return SmartRefresher(
