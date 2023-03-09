@@ -8,6 +8,7 @@ import 'package:game_database/app/data/models/screenshot_game.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../controllers/detail_game_controller.dart';
 
@@ -18,7 +19,7 @@ class DetailGameView extends GetView<DetailGameController> {
     final GameModels models = Get.arguments;
     return Scaffold(
         body: DefaultTabController(
-      length: 2,
+      length: 4,
       child: CustomScrollView(
         slivers: [
           SliverAppBar(
@@ -66,14 +67,15 @@ class DetailGameView extends GetView<DetailGameController> {
                     var date = DateTime.parse("${snapshot.data?.released!}");
 
                     return Column(
-                      mainAxisSize: MainAxisSize.min,
+                      //mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(
                           width: context.width,
-                          height: 200,
+                          height: 130,
                           // color: Colors.amber,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.only(
+                                top: 8, left: 8, right: 8),
                             child: Center(
                               child: Table(
                                 border: TableBorder.all(),
@@ -132,20 +134,36 @@ class DetailGameView extends GetView<DetailGameController> {
                                       ],
                                     ),
                                   ]),
-                                  TableRow(children: [
-                                    const Padding(
-                                      padding: EdgeInsets.all(8.0),
-                                      child: Text("Genre"),
-                                    ),
-                                    // for (var genre in snapshot.data!.genres!)
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                          "${snapshot.data!.genres![0].name}"),
-                                    )
-                                  ])
+                                  // TableRow(children: [
+                                  //   const Padding(
+                                  //     padding: EdgeInsets.all(8.0),
+                                  //     child: Text("Genre"),
+                                  //   ),
+                                  //   // for (var genre in snapshot.data!.genres!)
+                                  //   Padding(
+                                  //     padding: const EdgeInsets.all(8.0),
+                                  //     child: Text(
+                                  //         "${snapshot.data!.genres![0].name}"),
+                                  //   )
+                                  // ])
                                 ],
                               ),
+                            ),
+                          ),
+                        ),
+                        Container(
+                          width: context.width,
+                          height: 50,
+                          // color: Colors.amber,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Wrap(
+                              children: [
+                                Text("Genre : ", style: GoogleFonts.poppins()),
+                                for (var genre in models.genres!)
+                                  Text("${genre.name} ",
+                                      style: GoogleFonts.poppins()),
+                              ],
                             ),
                           ),
                         ),
@@ -154,11 +172,13 @@ class DetailGameView extends GetView<DetailGameController> {
                           height: 30,
                           // color: Colors.blue,
                           child: const TabBar(
-                              // isScrollable: true,
+                              isScrollable: true,
                               labelColor: Colors.black,
                               tabs: [
                                 Tab(text: "About Game"),
                                 Tab(text: "Screenshots"),
+                                Tab(text: "Archievement"),
+                                Tab(text: "Same Series"),
                               ]),
                         ),
                         SizedBox(
@@ -230,6 +250,83 @@ class DetailGameView extends GetView<DetailGameController> {
                                     );
                                   },
                                 );
+                              },
+                            ),
+                            Text("Archievement"),
+                            GetBuilder<DetailGameController>(
+                              builder: (c) {
+                                return SmartRefresher(
+                                    controller: c.sameRefresh,
+                                    enablePullDown: true,
+                                    enablePullUp: true,
+                                    onLoading: () =>
+                                        c.loadSimilar(snapshot.data!.id!),
+                                    onRefresh: () =>
+                                        c.refrshSimilar(snapshot.data!.id!),
+                                    child: GridView.builder(
+                                      padding: const EdgeInsets.all(10),
+                                      gridDelegate:
+                                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                                              maxCrossAxisExtent: 150,
+                                              childAspectRatio: 1 / 1.6,
+                                              crossAxisSpacing: 10,
+                                              mainAxisSpacing: 20),
+                                      itemCount: controller.same.length,
+                                      itemBuilder: (context, index) {
+                                        GameModels models =
+                                            controller.same[index];
+                                        return Column(
+                                          children: [
+                                            Expanded(
+                                              child: Container(
+                                                // color: Colors.red,
+                                                width: 200,
+                                                height: context.height,
+                                                child: GestureDetector(
+                                                  onTap: () {},
+                                                  child: CachedNetworkImage(
+                                                    imageUrl:
+                                                        "${models.backgroundImage}",
+                                                    imageBuilder: (context,
+                                                            imageProvider) =>
+                                                        Container(
+                                                      decoration: BoxDecoration(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8),
+                                                        image: DecorationImage(
+                                                            image:
+                                                                imageProvider,
+                                                            fit: BoxFit.cover),
+                                                      ),
+                                                    ),
+                                                    progressIndicatorBuilder:
+                                                        (context, url,
+                                                                downloadProgress) =>
+                                                            Center(
+                                                      child: CircularProgressIndicator(
+                                                          value:
+                                                              downloadProgress
+                                                                  .progress),
+                                                    ),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Icon(Icons.error),
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                            Text(
+                                              "${models.name}",
+                                              style: GoogleFonts.poppins(
+                                                  textStyle: const TextStyle(
+                                                      overflow: TextOverflow
+                                                          .ellipsis)),
+                                            ),
+                                          ],
+                                        );
+                                      },
+                                    ));
                               },
                             )
                           ]),
