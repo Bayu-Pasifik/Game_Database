@@ -38,8 +38,19 @@ class LoadMoreView extends GetView<LoadMoreController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  IconButton(onPressed: () {}, icon: Icon(Icons.grid_on)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.list)),
+                  IconButton(
+                      onPressed: () {
+                        print("is grid in grid ${c.isGrid.value}");
+                        c.changeGrid();
+                      },
+                      icon: Icon(Icons.grid_on)),
+                  IconButton(
+                      onPressed: () {
+                        print("is grid in lsit ${c.isGrid.value}");
+                        // print(c.isGrid.value);
+                        c.changeList();
+                      },
+                      icon: Icon(Icons.list)),
                 ],
               ),
               Container(
@@ -52,43 +63,104 @@ class LoadMoreView extends GetView<LoadMoreController> {
                   enablePullUp: true,
                   onLoading: () => c.loadData(genres),
                   onRefresh: () => c.refreshData(genres),
-                  child: ListView.separated(
-                      primary: true,
-                      shrinkWrap: true,
-                      physics: const PageScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        GameModels models = c.action[index];
-                        return ListTile(
-                          leading: SizedBox(
-                            width: 50,
-                            height: 50,
-                            child: CachedNetworkImage(
-                              imageUrl: "${models.backgroundImage}",
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  image: DecorationImage(
-                                      image: imageProvider, fit: BoxFit.cover),
+                  child: (c.isGrid.value != true)
+                      ? ListView.separated(
+                          primary: true,
+                          shrinkWrap: true,
+                          physics: const PageScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            GameModels models = c.action[index];
+                            return ListTile(
+                              leading: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child: CachedNetworkImage(
+                                  imageUrl: "${models.backgroundImage}",
+                                  imageBuilder: (context, imageProvider) =>
+                                      Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8),
+                                      image: DecorationImage(
+                                          image: imageProvider,
+                                          fit: BoxFit.cover),
+                                    ),
+                                  ),
+                                  progressIndicatorBuilder:
+                                      (context, url, downloadProgress) =>
+                                          Center(
+                                    child: CircularProgressIndicator(
+                                        value: downloadProgress.progress),
+                                  ),
+                                  errorWidget: (context, url, error) =>
+                                      const Icon(Icons.error),
                                 ),
                               ),
-                              progressIndicatorBuilder:
-                                  (context, url, downloadProgress) => Center(
-                                child: CircularProgressIndicator(
-                                    value: downloadProgress.progress),
-                              ),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            ),
-                          ),
-                          title: Text("${models.name}"),
-                          subtitle: Text("${models.playtime} hours"),
-                          isThreeLine: true,
-                        );
-                      },
-                      separatorBuilder: (context, index) =>
-                          const SizedBox(height: 10),
-                      itemCount: c.action.length),
+                              title: Text("${models.name}"),
+                              subtitle: Text("${models.playtime} hours"),
+                              isThreeLine: true,
+                            );
+                          },
+                          separatorBuilder: (context, index) =>
+                              const SizedBox(height: 10),
+                          itemCount: c.action.length)
+                      : GridView.builder(
+                          primary: true,
+                          shrinkWrap: true,
+                          // physics: ,
+                          padding: const EdgeInsets.all(10),
+                          gridDelegate:
+                              const SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 150,
+                                  childAspectRatio: 1 / 1.6,
+                                  crossAxisSpacing: 10,
+                                  mainAxisSpacing: 20),
+                          itemCount: controller.action.length,
+                          itemBuilder: (context, index) {
+                            GameModels models = controller.action[index];
+                            return Column(
+                              children: [
+                                Expanded(
+                                  child: Container(
+                                    // color: Colors.red,
+                                    width: 200,
+                                    height: context.height,
+                                    child: GestureDetector(
+                                      onTap: () {},
+                                      child: CachedNetworkImage(
+                                        imageUrl: "${models.backgroundImage}",
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover),
+                                          ),
+                                        ),
+                                        progressIndicatorBuilder:
+                                            (context, url, downloadProgress) =>
+                                                Center(
+                                          child: CircularProgressIndicator(
+                                              value: downloadProgress.progress),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            const Icon(Icons.error),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "${models.name}",
+                                  style: GoogleFonts.poppins(
+                                      textStyle: const TextStyle(
+                                          overflow: TextOverflow.ellipsis)),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
                 ),
               ),
             ],

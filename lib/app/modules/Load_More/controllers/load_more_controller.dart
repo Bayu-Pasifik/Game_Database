@@ -9,6 +9,7 @@ class LoadMoreController extends GetxController {
   List<dynamic> action = [];
   String? next = '';
   var hal = 1.obs;
+  var isGrid = false.obs;
   RefreshController refreshController = RefreshController(initialRefresh: true);
   // ! action Series
   String apikey = "7a395681502b437d8cbc489ebee68c6c";
@@ -23,6 +24,16 @@ class LoadMoreController extends GetxController {
     var seen = <dynamic>{};
     action = tempdata.where((element) => seen.add(element)).toList();
     return action;
+  }
+
+  void changeGrid() {
+    isGrid.value = true;
+    update();
+  }
+
+  void changeList() {
+    isGrid.value = false;
+    update();
   }
 
   void refreshData(String genres) async {
