@@ -22,6 +22,10 @@ class DetailGameView extends GetView<DetailGameController> {
         body: DefaultTabController(
       length: 4,
       child: CustomScrollView(
+        // primary: true,
+        // shrinkWrap: true,
+        // physics: const BouncingScrollPhysics(),
+        scrollDirection: Axis.vertical,
         slivers: [
           SliverAppBar(
             snap: true,
@@ -68,7 +72,6 @@ class DetailGameView extends GetView<DetailGameController> {
                     var date = DateTime.parse("${snapshot.data?.released!}");
 
                     return Column(
-                      //mainAxisSize: MainAxisSize.min,
                       children: [
                         SizedBox(
                           width: context.width,
@@ -172,7 +175,7 @@ class DetailGameView extends GetView<DetailGameController> {
                         ),
                         SizedBox(
                           width: context.width,
-                          height: context.height / 0.8,
+                          height: context.height,
                           child: TabBarView(children: [
                             // ! about
                             Text(
@@ -190,6 +193,9 @@ class DetailGameView extends GetView<DetailGameController> {
                                       child: CircularProgressIndicator());
                                 }
                                 return GridView.builder(
+                                  primary: true,
+                                  shrinkWrap: true,
+                                  physics: const PageScrollPhysics(),
                                   padding: const EdgeInsets.all(10),
                                   gridDelegate:
                                       const SliverGridDelegateWithMaxCrossAxisExtent(
@@ -254,6 +260,9 @@ class DetailGameView extends GetView<DetailGameController> {
                                   onRefresh: () =>
                                       c.refreshArchieve(snapshot.data!.id!),
                                   child: ListView.separated(
+                                      primary: true,
+                                      shrinkWrap: true,
+                                      physics: const PageScrollPhysics(),
                                       itemBuilder: (context, index) {
                                         ArchievementGame archievementGame =
                                             c.archievement[index];
@@ -314,6 +323,9 @@ class DetailGameView extends GetView<DetailGameController> {
                                     onRefresh: () =>
                                         c.refrshSimilar(snapshot.data!.id!),
                                     child: GridView.builder(
+                                      primary: true,
+                                      shrinkWrap: true,
+                                      // physics: ,
                                       padding: const EdgeInsets.all(10),
                                       gridDelegate:
                                           const SliverGridDelegateWithMaxCrossAxisExtent(

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/Load_More/bindings/load_more_binding.dart';
+import '../modules/Load_More/views/load_more_view.dart';
 import '../modules/detail_game/bindings/detail_game_binding.dart';
 import '../modules/detail_game/views/detail_game_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -22,6 +24,11 @@ class AppPages {
       name: _Paths.DETAIL_GAME,
       page: () => const DetailGameView(),
       binding: DetailGameBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOAD_MORE,
+      page: () => const LoadMoreView(),
+      binding: LoadMoreBinding(),
     ),
   ];
 }

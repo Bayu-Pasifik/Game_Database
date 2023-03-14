@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/modules/home/views/action_view.dart';
 import 'package:game_database/app/modules/home/views/adventure_view.dart';
 import 'package:game_database/app/modules/home/views/arcade_view.dart';
@@ -17,8 +18,10 @@ import 'package:game_database/app/modules/home/views/rpg_view.dart';
 import 'package:game_database/app/modules/home/views/simulation_view.dart';
 import 'package:game_database/app/modules/home/views/sport_view.dart';
 import 'package:game_database/app/modules/home/views/strategy_view.dart';
+import 'package:game_database/app/routes/app_pages.dart';
 
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -38,8 +41,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Action Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Action Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "action");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               ActionView(actions: controller.action),
@@ -47,8 +54,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Indie Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Indie Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "indie");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               IndieView(indie: controller.indie),
@@ -56,8 +67,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Adventure Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Adventure Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "adventure");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               AdventureView(adventure: controller.adventure),
@@ -65,8 +80,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("RPG Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("RPG Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "5");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               RpgView(rpg: controller.rpg),
@@ -74,8 +93,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Strategy Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Strategy Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "strategy");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               StrategyView(strategy: controller.strategy),
@@ -83,8 +106,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Casual Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Casual Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "casual");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               CasualView(casual: controller.casual),
@@ -92,8 +119,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Simulation Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Simulation Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "simulation");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               SimulationView(simulation: controller.simulation),
@@ -101,8 +132,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Puzzle Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Puzzle Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "puzzle");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               PuzzleView(puzzle: controller.puzzle),
@@ -110,8 +145,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Arcade Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Arcade Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "arcade");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               ArcadeView(arcade: controller.arcade),
@@ -119,8 +158,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Platformer Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Platformer Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "platformer");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               PlatformerView(platformer: controller.platformer),
@@ -128,8 +171,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Racing Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Racing Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "racing");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               RacingView(racing: controller.racing),
@@ -137,8 +184,13 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Massive Multiplayer Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Massive Multiplayer Game",
+                      style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "59");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               MultiPlayerView(multi: controller.mmo),
@@ -146,8 +198,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Sport Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Sport Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "sports");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               SportView(sport: controller.sport),
@@ -155,8 +211,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Fighting Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Fighting Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "fighting");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               FightingView(fighting: controller.fighting),
@@ -164,8 +224,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Family Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Family Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "family");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               FamilyView(family: controller.family),
@@ -173,8 +237,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Board Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Board Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "28");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               BoardView(board: controller.board),
@@ -182,8 +250,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Educational Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Educational Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "34");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               EducationalView(educational: controller.educational),
@@ -191,8 +263,12 @@ class HomeView extends GetView<HomeController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Card Game"),
-                  TextButton(onPressed: () {}, child: Text("Load More"))
+                  Text("Card Game", style: GoogleFonts.poppins()),
+                  TextButton(
+                      onPressed: () {
+                        Get.toNamed(Routes.LOAD_MORE, arguments: "card");
+                      },
+                      child: Text("Load More", style: GoogleFonts.poppins()))
                 ],
               ),
               CardView(card: controller.card),
