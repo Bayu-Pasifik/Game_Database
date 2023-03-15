@@ -29,8 +29,7 @@ class ActionView extends GetView<HomeController> {
             itemBuilder: (context, index) {
               GameModels models = snapshot.data?[index] ?? "";
               return GestureDetector(
-                onTap: () =>
-                    Get.toNamed(Routes.DETAIL_GAME, arguments: models),
+                onTap: () => Get.toNamed(Routes.DETAIL_GAME, arguments: models),
                 child: Column(
                   children: [
                     Expanded(

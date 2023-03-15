@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:game_database/app/data/models/game_models.dart';
+import 'package:game_database/app/routes/app_pages.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -108,7 +109,10 @@ class LoadMoreView extends GetView<LoadMoreController> {
                                 width: 200,
                                 height: context.height,
                                 child: GestureDetector(
-                                  onTap: () {},
+                                  onTap: () {
+                                    Get.toNamed(Routes.DETAIL_GAME,
+                                        arguments: models);
+                                  },
                                   child: CachedNetworkImage(
                                     imageUrl: "${models.backgroundImage}",
                                     imageBuilder: (context, imageProvider) =>

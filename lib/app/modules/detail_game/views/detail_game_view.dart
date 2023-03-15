@@ -38,7 +38,7 @@ class DetailGameView extends GetView<DetailGameController> {
             ),
             expandedHeight: 150,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text("${models.name}", textScaleFactor: 1),
+              title: Text("${models.name}"),
               background: CachedNetworkImage(
                 imageUrl: models.backgroundImage!,
                 imageBuilder: (context, imageProvider) => Container(
@@ -178,10 +178,14 @@ class DetailGameView extends GetView<DetailGameController> {
                           height: context.height,
                           child: TabBarView(children: [
                             // ! about
-                            Text(
-                              Bidi.stripHtmlIfNeeded(
-                                  snapshot.data!.descriptionRaw!),
-                              style: GoogleFonts.poppins(),
+                            Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 10),
+                              child: Text(
+                                Bidi.stripHtmlIfNeeded(
+                                    snapshot.data!.descriptionRaw!),
+                                style: GoogleFonts.poppins(),
+                              ),
                             ),
                             // ! SS
                             FutureBuilder<List<dynamic>>(
