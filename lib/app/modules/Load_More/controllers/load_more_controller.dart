@@ -1,5 +1,6 @@
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -9,7 +10,8 @@ class LoadMoreController extends GetxController {
   List<dynamic> action = [];
   String? next = '';
   var hal = 1.obs;
-  var isGrid = false.obs;
+  var isGrid = true.obs;
+
   RefreshController refreshController = RefreshController(initialRefresh: true);
   // ! action Series
   String apikey = "7a395681502b437d8cbc489ebee68c6c";
@@ -21,13 +23,23 @@ class LoadMoreController extends GetxController {
     next = json.decode(response.body)["next"];
     print(url);
     var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    var seen = <dynamic>{};
-    action = tempdata.where((element) => seen.add(element)).toList();
+    action.addAll(tempdata);
+    print(action.length);
     return action;
   }
 
-  void changeGrid() {
-    isGrid.value = true;
+  final box = GetStorage();
+  bool get gridMode => box.read('gridMode') ?? false;
+  // bool get listMode => box.remove('gridMode');
+  void changeGrid(bool val) {
+    if (isGrid.value == true) {
+      box.write('gridMode', val);
+    } else {
+      box.remove("gridMode");
+    }
+    isGrid.toggle();
+    print("isi isGrid $isGrid");
+    print("isi gridMode $isGrid");
     update();
   }
 
@@ -39,6 +51,7 @@ class LoadMoreController extends GetxController {
   void refreshData(String genres) async {
     if (refreshController.initialRefresh == true) {
       hal.value = 1;
+      action.clear();
       await loadMore(genres, hal.value);
       update();
       return refreshController.refreshCompleted();

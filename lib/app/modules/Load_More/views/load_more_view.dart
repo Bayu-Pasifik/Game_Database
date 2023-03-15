@@ -16,7 +16,7 @@ class LoadMoreView extends GetView<LoadMoreController> {
     return Scaffold(
       appBar: AppBar(
         title: (genres == "5")
-            ? Text("RPG".toUpperCase(), style: GoogleFonts.poppins())
+            ? Text("RPG Game".toUpperCase(), style: GoogleFonts.poppins())
             : (genres == "59")
                 ? Text("Massive Multiplayer Online Game".toUpperCase(),
                     style: GoogleFonts.poppins())
@@ -31,139 +31,118 @@ class LoadMoreView extends GetView<LoadMoreController> {
         centerTitle: true,
         elevation: 0,
       ),
+      floatingActionButton: FloatingActionButton(
+          onPressed: () => controller.changeGrid(controller.isGrid.value),
+          child: Obx(() => controller.isGrid.isTrue
+              ? const Icon(Icons.grid_on)
+              : const Icon(Icons.list))),
       body: GetBuilder<LoadMoreController>(
         builder: (c) {
-          return ListView(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        print("is grid in grid ${c.isGrid.value}");
-                        c.changeGrid();
-                      },
-                      icon: Icon(Icons.grid_on)),
-                  IconButton(
-                      onPressed: () {
-                        print("is grid in lsit ${c.isGrid.value}");
-                        // print(c.isGrid.value);
-                        c.changeList();
-                      },
-                      icon: Icon(Icons.list)),
-                ],
-              ),
-              Container(
-                width: context.width,
-                height: context.height,
-                // color: Colors.amber,
-                child: SmartRefresher(
-                  controller: c.refreshController,
-                  enablePullDown: true,
-                  enablePullUp: true,
-                  onLoading: () => c.loadData(genres),
-                  onRefresh: () => c.refreshData(genres),
-                  child: (c.isGrid.value != true)
-                      ? ListView.separated(
-                          primary: true,
-                          shrinkWrap: true,
-                          physics: const PageScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            GameModels models = c.action[index];
-                            return ListTile(
-                              leading: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child: CachedNetworkImage(
-                                  imageUrl: "${models.backgroundImage}",
-                                  imageBuilder: (context, imageProvider) =>
-                                      Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(8),
-                                      image: DecorationImage(
-                                          image: imageProvider,
-                                          fit: BoxFit.cover),
-                                    ),
-                                  ),
-                                  progressIndicatorBuilder:
-                                      (context, url, downloadProgress) =>
-                                          Center(
-                                    child: CircularProgressIndicator(
-                                        value: downloadProgress.progress),
-                                  ),
-                                  errorWidget: (context, url, error) =>
-                                      const Icon(Icons.error),
+          return Container(
+            width: context.width,
+            height: context.height,
+            // color: Colors.amber,
+            child: SmartRefresher(
+              controller: c.refreshController,
+              enablePullDown: true,
+              enablePullUp: true,
+              onLoading: () => c.loadData(genres),
+              onRefresh: () => c.refreshData(genres),
+              child: (c.gridMode == false)
+                  ? ListView.separated(
+                      primary: true,
+                      shrinkWrap: true,
+                      physics: const PageScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        GameModels models = c.action[index];
+                        return ListTile(
+                          leading: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: CachedNetworkImage(
+                              imageUrl: "${models.backgroundImage}",
+                              imageBuilder: (context, imageProvider) =>
+                                  Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  image: DecorationImage(
+                                      image: imageProvider, fit: BoxFit.cover),
                                 ),
                               ),
-                              title: Text("${models.name}"),
-                              subtitle: Text("${models.playtime} hours"),
-                              isThreeLine: true,
-                            );
-                          },
-                          separatorBuilder: (context, index) =>
-                              const SizedBox(height: 10),
-                          itemCount: c.action.length)
-                      : GridView.builder(
-                          primary: true,
-                          shrinkWrap: true,
-                          // physics: ,
-                          padding: const EdgeInsets.all(10),
-                          gridDelegate:
-                              const SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 150,
-                                  childAspectRatio: 1 / 1.6,
-                                  crossAxisSpacing: 10,
-                                  mainAxisSpacing: 20),
-                          itemCount: controller.action.length,
-                          itemBuilder: (context, index) {
-                            GameModels models = controller.action[index];
-                            return Column(
-                              children: [
-                                Expanded(
-                                  child: Container(
-                                    // color: Colors.red,
-                                    width: 200,
-                                    height: context.height,
-                                    child: GestureDetector(
-                                      onTap: () {},
-                                      child: CachedNetworkImage(
-                                        imageUrl: "${models.backgroundImage}",
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.cover),
-                                          ),
-                                        ),
-                                        progressIndicatorBuilder:
-                                            (context, url, downloadProgress) =>
-                                                Center(
-                                          child: CircularProgressIndicator(
-                                              value: downloadProgress.progress),
-                                        ),
-                                        errorWidget: (context, url, error) =>
-                                            const Icon(Icons.error),
+                              progressIndicatorBuilder:
+                                  (context, url, downloadProgress) => Center(
+                                child: CircularProgressIndicator(
+                                    value: downloadProgress.progress),
+                              ),
+                              errorWidget: (context, url, error) =>
+                                  const Icon(Icons.error),
+                            ),
+                          ),
+                          title: Text("${models.name}"),
+                          subtitle: Text("${models.playtime} hours"),
+                          isThreeLine: true,
+                        );
+                      },
+                      separatorBuilder: (context, index) =>
+                          const SizedBox(height: 10),
+                      itemCount: c.action.length)
+                  : GridView.builder(
+                      primary: true,
+                      shrinkWrap: true,
+                      // physics: ,
+                      padding: const EdgeInsets.all(10),
+                      gridDelegate:
+                          const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 150,
+                              childAspectRatio: 1 / 1.6,
+                              crossAxisSpacing: 10,
+                              mainAxisSpacing: 20),
+                      itemCount: controller.action.length,
+                      itemBuilder: (context, index) {
+                        GameModels models = controller.action[index];
+                        return Column(
+                          children: [
+                            Expanded(
+                              child: Container(
+                                // color: Colors.red,
+                                width: 200,
+                                height: context.height,
+                                child: GestureDetector(
+                                  onTap: () {},
+                                  child: CachedNetworkImage(
+                                    imageUrl: "${models.backgroundImage}",
+                                    imageBuilder: (context, imageProvider) =>
+                                        Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        image: DecorationImage(
+                                            image: imageProvider,
+                                            fit: BoxFit.cover),
                                       ),
                                     ),
+                                    progressIndicatorBuilder:
+                                        (context, url, downloadProgress) =>
+                                            Center(
+                                      child: CircularProgressIndicator(
+                                          value: downloadProgress.progress),
+                                    ),
+                                    errorWidget: (context, url, error) =>
+                                        const Icon(Icons.error),
                                   ),
                                 ),
-                                Text(
-                                  "${models.name}",
-                                  style: GoogleFonts.poppins(
-                                      textStyle: const TextStyle(
-                                          overflow: TextOverflow.ellipsis)),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                ),
-              ),
-            ],
+                              ),
+                            ),
+                            Text(
+                              "${models.name}",
+                              style: GoogleFonts.poppins(
+                                  textStyle: const TextStyle(
+                                      overflow: TextOverflow.ellipsis)),
+                            ),
+                          ],
+                        );
+                      },
+                    ),
+            ),
           );
         },
       ),
