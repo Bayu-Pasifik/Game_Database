@@ -95,7 +95,7 @@ class DetailGameView extends GetView<DetailGameController> {
                                             child: Text(
                                                 "${date.day} - ${date.month} - ${date.year}"),
                                           )
-                                        : Text("Null")
+                                        : const Text("Null")
                                   ]),
                                   TableRow(children: [
                                     const Padding(
@@ -108,7 +108,7 @@ class DetailGameView extends GetView<DetailGameController> {
                                             child: Text(
                                                 "${snapshot.data!.rating} Of ${snapshot.data!.ratingTop}"),
                                           )
-                                        : Text("Null")
+                                        : const Text("Null")
                                   ]),
                                   TableRow(children: [
                                     const Padding(
@@ -121,21 +121,17 @@ class DetailGameView extends GetView<DetailGameController> {
                                             child: Text(
                                                 "${snapshot.data?.playtime} Hours"),
                                           )
-                                        : Text("Null")
+                                        : const Text("Null")
                                   ]),
                                   TableRow(children: [
                                     const Padding(
                                       padding: EdgeInsets.all(8.0),
                                       child: Text("Publisher"),
                                     ),
-                                    Wrap(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Text(
-                                              "${snapshot.data!.publishers![0].name}"),
-                                        ),
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                          "${snapshot.data!.publishers![0].name}"),
                                     ),
                                   ]),
                                 ],
@@ -143,6 +139,9 @@ class DetailGameView extends GetView<DetailGameController> {
                             ),
                           ),
                         ),
+                        (snapshot.data!.publishers![0].name!.length >= 13)
+                            ? const SizedBox(height: 20)
+                            : const SizedBox(),
                         Container(
                           width: context.width,
                           height: 50,
@@ -326,73 +325,82 @@ class DetailGameView extends GetView<DetailGameController> {
                                         c.loadSimilar(snapshot.data!.id!),
                                     onRefresh: () =>
                                         c.refrshSimilar(snapshot.data!.id!),
-                                    child: GridView.builder(
-                                      primary: true,
-                                      shrinkWrap: true,
-                                      // physics: ,
-                                      padding: const EdgeInsets.all(10),
-                                      gridDelegate:
-                                          const SliverGridDelegateWithMaxCrossAxisExtent(
-                                              maxCrossAxisExtent: 150,
-                                              childAspectRatio: 1 / 1.6,
-                                              crossAxisSpacing: 10,
-                                              mainAxisSpacing: 20),
-                                      itemCount: controller.same.length,
-                                      itemBuilder: (context, index) {
-                                        GameModels models =
-                                            controller.same[index];
-                                        return Column(
-                                          children: [
-                                            Expanded(
-                                              child: Container(
-                                                // color: Colors.red,
-                                                width: 200,
-                                                height: context.height,
-                                                child: GestureDetector(
-                                                  onTap: () {},
-                                                  child: CachedNetworkImage(
-                                                    imageUrl:
-                                                        "${models.backgroundImage}",
-                                                    imageBuilder: (context,
-                                                            imageProvider) =>
-                                                        Container(
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8),
-                                                        image: DecorationImage(
-                                                            image:
-                                                                imageProvider,
-                                                            fit: BoxFit.cover),
+                                    child: (c.same.isNotEmpty)
+                                        ? GridView.builder(
+                                            primary: true,
+                                            shrinkWrap: true,
+                                            // physics: ,
+                                            padding: const EdgeInsets.all(10),
+                                            gridDelegate:
+                                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                                                    maxCrossAxisExtent: 150,
+                                                    childAspectRatio: 1 / 1.6,
+                                                    crossAxisSpacing: 10,
+                                                    mainAxisSpacing: 20),
+                                            itemCount: controller.same.length,
+                                            itemBuilder: (context, index) {
+                                              GameModels models =
+                                                  controller.same[index];
+                                              return Column(
+                                                children: [
+                                                  Expanded(
+                                                    child: Container(
+                                                      // color: Colors.red,
+                                                      width: 200,
+                                                      height: context.height,
+                                                      child: GestureDetector(
+                                                        onTap: () {},
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl:
+                                                              "${models.backgroundImage}",
+                                                          imageBuilder: (context,
+                                                                  imageProvider) =>
+                                                              Container(
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8),
+                                                              image: DecorationImage(
+                                                                  image:
+                                                                      imageProvider,
+                                                                  fit: BoxFit
+                                                                      .cover),
+                                                            ),
+                                                          ),
+                                                          progressIndicatorBuilder:
+                                                              (context, url,
+                                                                      downloadProgress) =>
+                                                                  Center(
+                                                            child: CircularProgressIndicator(
+                                                                value: downloadProgress
+                                                                    .progress),
+                                                          ),
+                                                          errorWidget: (context,
+                                                                  url, error) =>
+                                                              const Icon(
+                                                                  Icons.error),
+                                                        ),
                                                       ),
                                                     ),
-                                                    progressIndicatorBuilder:
-                                                        (context, url,
-                                                                downloadProgress) =>
-                                                            Center(
-                                                      child: CircularProgressIndicator(
-                                                          value:
-                                                              downloadProgress
-                                                                  .progress),
-                                                    ),
-                                                    errorWidget: (context, url,
-                                                            error) =>
-                                                        const Icon(Icons.error),
                                                   ),
-                                                ),
-                                              ),
-                                            ),
-                                            Text(
-                                              "${models.name}",
-                                              style: GoogleFonts.poppins(
-                                                  textStyle: const TextStyle(
-                                                      overflow: TextOverflow
-                                                          .ellipsis)),
-                                            ),
-                                          ],
-                                        );
-                                      },
-                                    ));
+                                                  Text(
+                                                    "${models.name}",
+                                                    style: GoogleFonts.poppins(
+                                                        textStyle: const TextStyle(
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis)),
+                                                  ),
+                                                ],
+                                              );
+                                            },
+                                          )
+                                        : const Center(
+                                            child: Text("There is no data"),
+                                          ));
                               },
                             )
                           ]),

@@ -48,9 +48,8 @@ class DetailGameController extends GetxController {
     next = json.decode(response.body)["next"];
     var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
     update();
-    var seen = <dynamic>{};
-    same = tempdata.where((element) => seen.add(element)).toList();
     same.addAll(tempdata);
+    print("panjang same : ${same.length}");
     update();
     return same;
   }
@@ -64,11 +63,6 @@ class DetailGameController extends GetxController {
     final data = json.decode(response.body)["results"];
     nextArchivment = json.decode(response.body)["next"];
     final tempdata = data.map((e) => ArchievementGame.fromJson(e)).toList();
-
-    update();
-    var archieve = <dynamic>{};
-    // archievement = tempdata.where((e) => archieve.addAll(e)).toList();
-    archievement = tempdata.where((element) => archieve.add(element)).toList();
     archievement.addAll(tempdata);
     update();
     print("panjang archievement ${archievement.length}");
@@ -78,6 +72,7 @@ class DetailGameController extends GetxController {
   void refrshSimilar(int id) async {
     if (sameRefresh.initialRefresh == true) {
       hal.value = 1;
+      same.clear();
       await sameSeries(id, hal.value);
       update();
       return sameRefresh.refreshCompleted();
@@ -89,6 +84,7 @@ class DetailGameController extends GetxController {
   void loadSimilar(int id) async {
     if (next != null) {
       hal.value = hal.value + 1;
+
       await sameSeries(id, hal.value);
       update();
       return sameRefresh.loadComplete();
@@ -100,6 +96,7 @@ class DetailGameController extends GetxController {
   void refreshArchieve(int id) async {
     if (archieveRefresh.initialRefresh == true) {
       halArchive.value = 1;
+      archievement.clear();
       await archievementGame(id, halArchive.value);
       update();
       return archieveRefresh.refreshCompleted();
@@ -111,6 +108,7 @@ class DetailGameController extends GetxController {
   void loadArchieve(int id) async {
     if (nextArchivment != null) {
       halArchive.value = halArchive.value + 1;
+
       await archievementGame(id, halArchive.value);
       update();
       return archieveRefresh.loadComplete();

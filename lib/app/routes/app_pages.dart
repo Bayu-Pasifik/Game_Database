@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/Load_More/bindings/load_more_binding.dart';
 import '../modules/Load_More/views/load_more_view.dart';
+import '../modules/Search/bindings/search_binding.dart';
+import '../modules/Search/views/search_view.dart';
 import '../modules/detail_game/bindings/detail_game_binding.dart';
 import '../modules/detail_game/views/detail_game_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -18,17 +20,29 @@ class AppPages {
     GetPage(
       name: _Paths.HOME,
       page: () => const HomeView(),
+      transition: Transition.upToDown,
       binding: HomeBinding(),
     ),
     GetPage(
       name: _Paths.DETAIL_GAME,
       page: () => const DetailGameView(),
+      transition: Transition.cupertino,
+      transitionDuration: const Duration(seconds: 1),
       binding: DetailGameBinding(),
     ),
     GetPage(
       name: _Paths.LOAD_MORE,
+      transition: Transition.circularReveal,
+      transitionDuration: const Duration(seconds: 1),
       page: () => const LoadMoreView(),
       binding: LoadMoreBinding(),
+    ),
+    GetPage(
+      name: _Paths.SEARCH,
+      page: () => const SearchView(),
+      transition: Transition.fadeIn,
+      transitionDuration: const Duration(seconds: 1),
+      binding: SearchBinding(),
     ),
   ];
 }

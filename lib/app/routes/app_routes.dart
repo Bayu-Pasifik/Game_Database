@@ -6,6 +6,7 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const DETAIL_GAME = _Paths.DETAIL_GAME;
   static const LOAD_MORE = _Paths.LOAD_MORE;
+  static const SEARCH = _Paths.SEARCH;
 }
 
 abstract class _Paths {
@@ -13,4 +14,5 @@ abstract class _Paths {
   static const HOME = '/home';
   static const DETAIL_GAME = '/detail-game';
   static const LOAD_MORE = '/load-more';
+  static const SEARCH = '/search';
 }

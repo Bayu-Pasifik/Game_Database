@@ -37,8 +37,12 @@ class HomeView extends GetView<HomeController> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Welcome Gamer"),
-              IconButton(onPressed: () {}, icon: Icon(Icons.search))
+              const Text("Welcome Gamer"),
+              IconButton(
+                  onPressed: () {
+                    Get.toNamed(Routes.SEARCH);
+                  },
+                  icon: const Icon(Icons.search))
             ],
           ),
           Row(
