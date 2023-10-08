@@ -1,29 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:game_database/app/data/constant/color.dart';
 import 'package:game_database/app/data/models/game_models.dart';
-import 'package:game_database/app/data/models/genres.dart';
-import 'package:game_database/app/modules/home/views/action_view.dart';
-import 'package:game_database/app/modules/home/views/adventure_view.dart';
-import 'package:game_database/app/modules/home/views/arcade_view.dart';
-import 'package:game_database/app/modules/home/views/board_view.dart';
-import 'package:game_database/app/modules/home/views/card_view.dart';
-import 'package:game_database/app/modules/home/views/casual_view.dart';
-import 'package:game_database/app/modules/home/views/educational_view.dart';
-import 'package:game_database/app/modules/home/views/family_view.dart';
-import 'package:game_database/app/modules/home/views/fighting_view.dart';
-import 'package:game_database/app/modules/home/views/indie_view.dart';
-import 'package:game_database/app/modules/home/views/multi_player_view.dart';
-import 'package:game_database/app/modules/home/views/platformer_view.dart';
-import 'package:game_database/app/modules/home/views/puzzle_view.dart';
-import 'package:game_database/app/modules/home/views/racing_view.dart';
-import 'package:game_database/app/modules/home/views/rpg_view.dart';
-import 'package:game_database/app/modules/home/views/simulation_view.dart';
-import 'package:game_database/app/modules/home/views/sport_view.dart';
-import 'package:game_database/app/modules/home/views/strategy_view.dart';
 import 'package:game_database/app/routes/app_pages.dart';
-
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -39,7 +18,7 @@ class HomeView extends GetView<HomeController> {
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             print(controller.box.getValues());
-            
+
             controller.changeTheme(controller.isDarkmode.value);
           },
           child: Obx(() => controller.isDarkmode.isFalse
@@ -110,12 +89,54 @@ class HomeView extends GetView<HomeController> {
                       // Listen to tab changes and call handleTabChange from the controller when the tab changes
                       controller.tabController
                           .addListener(controller.handleTabChange);
-
+                      print("index : $index");
                       return PagedGridView<int, GameModels>(
                         // padding: EdgeInsets.all(10.w),
                         pagingController: index == 0
                             ? controller.actionGame
-                            : controller.indieGame,
+                            : index == 1
+                                ? controller.indieGame
+                                : index == 2
+                                    ? controller.adventureGame
+                                    : index == 3
+                                        ? controller.rpgGame
+                                        : index == 4
+                                            ? controller.strategyGame
+                                            : index == 5
+                                                ? controller.shooterGame
+                                                : index == 6
+                                                    ? controller.casualGame
+                                                    : index == 7
+                                                        ? controller
+                                                            .simulationGame
+                                                        : index == 8
+                                                            ? controller
+                                                                .puzzleGame
+                                                            : index == 9
+                                                                ? controller
+                                                                    .arcadeGame
+                                                                : index == 10
+                                                                    ? controller
+                                                                        .platformerGame
+                                                                    : index ==
+                                                                            11
+                                                                        ? controller
+                                                                            .mmoGame
+                                                                        : index ==
+                                                                                12
+                                                                            ? controller.racingGame
+                                                                            : index == 13
+                                                                                ? controller.sportsGame
+                                                                                : index == 14
+                                                                                    ? controller.fightingGame
+                                                                                    : index == 15
+                                                                                        ? controller.fammilyGame
+                                                                                        : index == 16
+                                                                                            ? controller.boardGame
+                                                                                            : index == 17
+                                                                                                ? controller.educationalGame
+                                                                                                : controller.cardGame,
+
                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2.h.toInt(),
                             crossAxisSpacing: 10.w,
@@ -126,40 +147,35 @@ class HomeView extends GetView<HomeController> {
                             return Column(
                               children: [
                                 Expanded(
-                                  child: Container(
-                                    // width: 200,
-                                    // height: 9999,
-                                    child: GestureDetector(
-                                      onTap: () {
-                                        // Get.toNamed(Routes.DETAIL_PAGE,
-                                        //     arguments: {
-                                        //       "movie": currentMovie,
-                                        //       "user": userData
-                                        //     });
-                                      },
-                                      child: CachedNetworkImage(
-                                        imageUrl: "${game.backgroundImage}",
-                                        imageBuilder:
-                                            (context, imageProvider) =>
-                                                Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(8),
-                                            image: DecorationImage(
-                                                image: imageProvider,
-                                                fit: BoxFit.cover),
-                                          ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // Get.toNamed(Routes.DETAIL_PAGE,
+                                      //     arguments: {
+                                      //       "movie": currentMovie,
+                                      //       "user": userData
+                                      //     });
+                                    },
+                                    child: CachedNetworkImage(
+                                      imageUrl: "${game.backgroundImage}",
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover),
                                         ),
-                                        progressIndicatorBuilder:
-                                            (context, url, downloadProgress) =>
-                                                Center(
-                                          child: CircularProgressIndicator(
-                                              value: downloadProgress.progress),
-                                        ),
-                                        errorWidget: (context, url, error) =>
-                                            Image.asset(
-                                                "assets/images/Image_not_available.png"),
                                       ),
+                                      progressIndicatorBuilder:
+                                          (context, url, downloadProgress) =>
+                                              Center(
+                                        child: CircularProgressIndicator(
+                                            value: downloadProgress.progress),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/Image_not_available.png"),
                                     ),
                                   ),
                                 ),

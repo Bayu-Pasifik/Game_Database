@@ -15,10 +15,6 @@ class HomeController extends GetxController
   String apikey = "7a395681502b437d8cbc489ebee68c6c";
   // ! Action
   late TabController tabController;
-  // final PagingController<int, GameModels> actionGame =
-  //     PagingController<int, GameModels>(firstPageKey: 1);
-  // final PagingController<int, GameModels> indieGame =
-  //     PagingController<int, GameModels>(firstPageKey: 1);
 
   // ! change theme
   final box = GetStorage();
@@ -116,6 +112,40 @@ class HomeController extends GetxController
       PagingController<int, GameModels>(firstPageKey: 1);
   final PagingController<int, GameModels> indieGame =
       PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> adventureGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> rpgGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> strategyGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> shooterGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> casualGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> simulationGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> puzzleGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> arcadeGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> platformerGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> mmoGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> racingGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> sportsGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> fightingGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> fammilyGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> boardGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> educationalGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
+  final PagingController<int, GameModels> cardGame =
+      PagingController<int, GameModels>(firstPageKey: 1);
   void handleTabChange() {
     // Check if the current tab is selected
     if (tabController.indexIsChanging) {
@@ -124,8 +154,41 @@ class HomeController extends GetxController
         actionGame.refresh();
       } else if (tabController.index == 1) {
         indieGame.refresh();
+      } else if (tabController.index == 2) {
+        adventureGame.refresh();
+      } else if (tabController.index == 3) {
+        rpgGame.refresh();
+      } else if (tabController.index == 4) {
+        strategyGame.refresh();
+      } else if (tabController.index == 5) {
+        shooterGame.refresh();
+      } else if (tabController.index == 6) {
+        casualGame.refresh();
+      } else if (tabController.index == 7) {
+        simulationGame.refresh();
+      } else if (tabController.index == 8) {
+        puzzleGame.refresh();
+      } else if (tabController.index == 9) {
+        arcadeGame.refresh();
+      } else if (tabController.index == 10) {
+        platformerGame.refresh();
+      } else if (tabController.index == 11) {
+        mmoGame.refresh();
+      } else if (tabController.index == 12) {
+        racingGame.refresh();
+      } else if (tabController.index == 13) {
+        sportsGame.refresh();
+      } else if (tabController.index == 14) {
+        fightingGame.refresh();
+      } else if (tabController.index == 15) {
+        fammilyGame.refresh();
+      } else if (tabController.index == 16) {
+        boardGame.refresh();
+      } else if (tabController.index == 17) {
+        educationalGame.refresh();
+      } else if (tabController.index == 18) {
+        cardGame.refresh();
       }
-      // Add similar conditions for other genres
     }
   }
 
@@ -175,217 +238,433 @@ class HomeController extends GetxController
         indieGame.appendPage(gamedata, pageKey + 1);
       }
     } catch (e) {
-      actionGame.error = e;
+      indieGame.error = e;
     }
     return modelGame;
   }
-  // Future<List<GameModels>> genreAction() async {
-  //   Uri url =
-  //       Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=action');
-  //   var response = await http.get(url);
-  //   var tempdata = json.decode(response.body)["results"];
-  //   var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
-  //   List<GameModels> gamedata = List<GameModels>.from(data);
-  //   print("data action: ${data[0].name}");
-  //   return gamedata;
-  // }
 
-  Future<List<GameModels>> genresIndie() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=indie');
-    var response = await http.get(url);
-    var tempdata = json.decode(response.body)["results"];
-    var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(data);
-    print("data indie: ${data[0].name}");
-    return gamedata;
-  }
-
-  Future<List<GameModels>> genreAdventure() async {
-    Uri url = Uri.parse(
-        'https://api.rawg.io/api/games?key=$apikey&genres=adventure&page=2');
-    var response = await http.get(url);
-    var tempdata = json.decode(response.body)["results"];
-    var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(data);
-    print("data adven: ${data[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreAdventure(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=adventure&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre adventure $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        adventureGame.appendLastPage(gamedata);
+      } else {
+        adventureGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      adventureGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! RPG
-  Future<List<dynamic>> genreRpg() async {
-    Uri url = Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=5');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi rpg ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreRpg(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=5&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre rpg $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        rpgGame.appendLastPage(gamedata);
+      } else {
+        rpgGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      rpgGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Strategy
-  Future<List<GameModels>> genreStrategy() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=strategy');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi strategy ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreStrategy(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=strategy&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre strategy $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        strategyGame.appendLastPage(gamedata);
+      } else {
+        strategyGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      strategyGame.error = e;
+    }
+    return modelGame;
+  }
+
+  // ! Shooter
+  Future<List<GameModels>> genreShooter(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=shooter&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre shooter $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        shooterGame.appendLastPage(gamedata);
+      } else {
+        shooterGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      shooterGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Casual
-  Future<List<GameModels>> genreCasual() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=casual');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi casual ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreCasual(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=casual&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre casual $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        casualGame.appendLastPage(gamedata);
+      } else {
+        casualGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      casualGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Simulation
-  Future<List<GameModels>> genreSimulation() async {
-    Uri url = Uri.parse(
-        'https://api.rawg.io/api/games?key=$apikey&genres=simulation');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi simulation ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreSimulation(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=simulation&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre simulation $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        simulationGame.appendLastPage(gamedata);
+      } else {
+        simulationGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      simulationGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Puzzle
-  Future<List<GameModels>> genrePuzzle() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=puzzle');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi puzzle ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genrePuzzle(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=puzzle&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre puzzle $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        puzzleGame.appendLastPage(gamedata);
+      } else {
+        puzzleGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      puzzleGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Arcade
-  Future<List<GameModels>> genreArcade() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=arcade');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi arcade ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreArcade(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=arcade&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre arcade $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        arcadeGame.appendLastPage(gamedata);
+      } else {
+        arcadeGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      arcadeGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Platformer
-  Future<List<GameModels>> genrePlatformer() async {
-    Uri url = Uri.parse(
-        'https://api.rawg.io/api/games?key=$apikey&genres=platformer');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi platformer ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genrePlatformer(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=platformer&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre platformer $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        platformerGame.appendLastPage(gamedata);
+      } else {
+        platformerGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      platformerGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Racing
-  Future<List<GameModels>> genreRacing() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=racing');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi racing ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreRacing(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=racing&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre racing $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        racingGame.appendLastPage(gamedata);
+      } else {
+        racingGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      racingGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! MMO
-  Future<List<GameModels>> genreMMO() async {
-    Uri url = Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=59');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi mmo ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreMMO(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=59&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre mmo $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        mmoGame.appendLastPage(gamedata);
+      } else {
+        mmoGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      mmoGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! sport
-  Future<List<GameModels>> genreSport() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=sports');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi sport ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreSport(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=sports&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre sports $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        sportsGame.appendLastPage(gamedata);
+      } else {
+        sportsGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      sportsGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Fighting
-  Future<List<GameModels>> genreFighting() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=fighting');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi fighting ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreFighting(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=fighting&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre fighting $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        fightingGame.appendLastPage(gamedata);
+      } else {
+        fightingGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      fightingGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Family
-  Future<List<GameModels>> genreFamily() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=family');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi Family ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreFamily(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=family&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre family $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        fammilyGame.appendLastPage(gamedata);
+      } else {
+        fammilyGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      fammilyGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Board
-  Future<List<GameModels>> genreBoard() async {
-    Uri url = Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=28');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi Board ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreBoard(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=28&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre board $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        boardGame.appendLastPage(gamedata);
+      } else {
+        boardGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      boardGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Educational
-  Future<List<GameModels>> genreEducational() async {
-    Uri url = Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=34');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi edu ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreEducational(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=34&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre educational $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        educationalGame.appendLastPage(gamedata);
+      } else {
+        educationalGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      educationalGame.error = e;
+    }
+    return modelGame;
   }
 
   // ! Card
-  Future<List<GameModels>> genreCard() async {
-    Uri url =
-        Uri.parse('https://api.rawg.io/api/games?key=$apikey&genres=card');
-    var response = await http.get(url);
-    var data = json.decode(response.body)["results"];
-    var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-    List<GameModels> gamedata = List<GameModels>.from(tempdata);
-    print("isi card ${tempdata[0].name}");
-    return gamedata;
+  Future<List<GameModels>> genreCard(int pageKey) async {
+    try {
+      Uri url = Uri.parse(
+          'https://api.rawg.io/api/games?key=$apikey&genres=card&page=$pageKey');
+      var response = await http.get(url);
+      var tempdata = json.decode(response.body)["results"];
+      var data = tempdata.map((e) => GameModels.fromJson(e)).toList();
+      List<GameModels> gamedata = List<GameModels>.from(data);
+      modelGame.addAll(gamedata);
+      print("page key genre card $pageKey");
+      final nextPage = json.decode(response.body)["next"];
+      final isLastPage = nextPage == false;
+      if (isLastPage) {
+        Get.snackbar("Error", "No more data");
+        cardGame.appendLastPage(gamedata);
+      } else {
+        cardGame.appendPage(gamedata, pageKey + 1);
+      }
+    } catch (e) {
+      cardGame.error = e;
+    }
+    return modelGame;
   }
 
   @override
@@ -403,23 +682,56 @@ class HomeController extends GetxController
     indieGame.addPageRequestListener((pageKey) {
       genreIndie(pageKey);
     });
-    // indie = genresIndie();
-    // action = genreAction();
-    // adventure = genreAdventure();
-    // rpg = genreRpg();
-    // strategy = genreStrategy();
-    // casual = genreCasual();
-    // simulation = genreSimulation();
-    // puzzle = genrePuzzle();
-    // arcade = genreArcade();
-    // platformer = genrePlatformer();
-    // racing = genreRacing();
-    // mmo = genreMMO();
-    // sport = genreSport();
-    // fighting = genreFighting();
-    // family = genreFamily();
-    // board = genreBoard();
-    // educational = genreEducational();
-    // card = genreCard();
+    adventureGame.addPageRequestListener((pageKey) {
+      genreAdventure(pageKey);
+    });
+    rpgGame.addPageRequestListener((pageKey) {
+      genreRpg(pageKey);
+    });
+    strategyGame.addPageRequestListener((pageKey) {
+      genreStrategy(pageKey);
+    });
+    shooterGame.addPageRequestListener((pageKey) {
+      genreShooter(pageKey);
+    });
+    casualGame.addPageRequestListener((pageKey) {
+      genreCasual(pageKey);
+    });
+    simulationGame.addPageRequestListener((pageKey) {
+      genreSimulation(pageKey);
+    });
+    puzzleGame.addPageRequestListener((pageKey) {
+      genrePuzzle(pageKey);
+    });
+    arcadeGame.addPageRequestListener((pageKey) {
+      genreArcade(pageKey);
+    });
+    platformerGame.addPageRequestListener((pageKey) {
+      genrePlatformer(pageKey);
+    });
+    mmoGame.addPageRequestListener((pageKey) {
+      genreMMO(pageKey);
+    });
+    racingGame.addPageRequestListener((pageKey) {
+      genreRacing(pageKey);
+    });
+    sportsGame.addPageRequestListener((pageKey) {
+      genreSport(pageKey);
+    });
+    fightingGame.addPageRequestListener((pageKey) {
+      genreFighting(pageKey);
+    });
+    fammilyGame.addPageRequestListener((pageKey) {
+      genreFamily(pageKey);
+    });
+    boardGame.addPageRequestListener((pageKey) {
+      genreBoard(pageKey);
+    });
+    educationalGame.addPageRequestListener((pageKey) {
+      genreEducational(pageKey);
+    });
+    cardGame.addPageRequestListener((pageKey) {
+      genreCard(pageKey);
+    });
   }
 }
