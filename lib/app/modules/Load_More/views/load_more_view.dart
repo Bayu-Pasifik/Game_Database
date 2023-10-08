@@ -39,7 +39,7 @@ class LoadMoreView extends GetView<LoadMoreController> {
               : const Icon(Icons.list))),
       body: GetBuilder<LoadMoreController>(
         builder: (c) {
-          return Container(
+          return SizedBox(
             width: context.width,
             height: context.height,
             // color: Colors.amber,
@@ -104,7 +104,7 @@ class LoadMoreView extends GetView<LoadMoreController> {
                         return Column(
                           children: [
                             Expanded(
-                              child: Container(
+                              child: SizedBox(
                                 // color: Colors.red,
                                 width: 200,
                                 height: context.height,

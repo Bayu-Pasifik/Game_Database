@@ -8,7 +8,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 import '../controllers/search_controller.dart';
 
-class SearchView extends GetView<SearchController> {
+class SearchView extends GetView<SearchC> {
   const SearchView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -63,7 +63,7 @@ class SearchView extends GetView<SearchController> {
                 ),
                 const SizedBox(height: 10),
                 Expanded(
-                  child: GetBuilder<SearchController>(
+                  child: GetBuilder<SearchC>(
                     builder: (c) {
                       return SizedBox(
                         width: context.width,

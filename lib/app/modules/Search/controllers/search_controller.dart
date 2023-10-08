@@ -6,7 +6,7 @@ import 'dart:convert';
 
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class SearchController extends GetxController {
+class SearchC extends GetxController {
   List<dynamic> result = [];
   String apikey = "7a395681502b437d8cbc489ebee68c6c";
   String? next = '';

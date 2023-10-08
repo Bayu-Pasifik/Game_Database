@@ -5,7 +5,6 @@ import 'package:game_database/app/data/models/screenshot_game.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:fast_immutable_collections/fast_immutable_collections.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class DetailGameController extends GetxController {

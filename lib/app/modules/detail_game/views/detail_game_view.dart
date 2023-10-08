@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 import 'package:game_database/app/data/models/archievement.dart';
 import 'package:game_database/app/data/models/detail_game.dart';
 import 'package:game_database/app/data/models/game_models.dart';
@@ -142,7 +141,7 @@ class DetailGameView extends GetView<DetailGameController> {
                         (snapshot.data!.publishers![0].name!.length >= 13)
                             ? const SizedBox(height: 20)
                             : const SizedBox(),
-                        Container(
+                        SizedBox(
                           width: context.width,
                           height: 50,
                           // color: Colors.amber,
@@ -344,7 +343,7 @@ class DetailGameView extends GetView<DetailGameController> {
                                               return Column(
                                                 children: [
                                                   Expanded(
-                                                    child: Container(
+                                                    child: SizedBox(
                                                       // color: Colors.red,
                                                       width: 200,
                                                       height: context.height,
