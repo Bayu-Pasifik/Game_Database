@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:game_database/app/data/constant/color.dart';
+// import 'package:game_database/app/data/constant/color.dart';
 import 'package:game_database/app/modules/home/controllers/home_controller.dart';
 import 'package:game_database/app/modules/home/views/home_view.dart';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
+// import 'package:google_fonts/google_fonts.dart';
 
 import 'app/routes/app_pages.dart';
 
@@ -25,7 +25,7 @@ void main() async {
       title: "Game Database",
       theme: controller.theme,
       home: FutureBuilder(
-        future: Future.delayed(const Duration(seconds: 3)),
+        future: Future.delayed(const Duration(seconds: 5)),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());

@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_controller.dart';
 import 'package:game_database/app/data/models/archievement.dart';
 import 'package:game_database/app/data/models/detail_game.dart';
 import 'package:game_database/app/data/models/game_models.dart';
@@ -14,6 +15,9 @@ class DetailGameController extends GetxController {
   var halArchive = 1.obs;
   String? next = '';
   String? nextArchivment = '';
+  // ! variable untuk slider
+  var currentSlider = 0.obs;
+  final CarouselController carouselController = CarouselController();
   // ! details
   String apikey = "7a395681502b437d8cbc489ebee68c6c";
   Future<DetailGame> details(int id) async {
@@ -27,14 +31,17 @@ class DetailGameController extends GetxController {
     return tempdata;
   }
 
+  List<ScreenshotGame> ssGame = [];
   // ! SS
-  Future<List<dynamic>> screenshot(int id) async {
+  Future<List<ScreenshotGame>> screenshot(int id) async {
     Uri url =
         Uri.parse('https://api.rawg.io/api/games/$id/screenshots?key=$apikey');
     var response = await http.get(url);
     var data = json.decode(response.body)["results"];
     var tempdata = data.map((e) => ScreenshotGame.fromJson(e)).toList();
-    return tempdata;
+    List<ScreenshotGame> ssData = List<ScreenshotGame>.from(tempdata);
+    ssGame.addAll(ssData);
+    return ssGame;
   }
 
   List same = [];
@@ -46,6 +53,7 @@ class DetailGameController extends GetxController {
     var data = json.decode(response.body)["results"];
     next = json.decode(response.body)["next"];
     var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
+
     update();
     same.addAll(tempdata);
     print("panjang same : ${same.length}");
@@ -114,5 +122,11 @@ class DetailGameController extends GetxController {
     } else {
       return archieveRefresh.loadNoData();
     }
+  }
+
+  @override
+  void onInit() {
+    print("init detail");
+    super.onInit();
   }
 }

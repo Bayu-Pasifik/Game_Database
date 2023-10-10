@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/routes/app_pages.dart';
 import 'package:get/get.dart';
-import 'package:get_storage/get_storage.dart';
+// import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
@@ -149,11 +149,8 @@ class HomeView extends GetView<HomeController> {
                                 Expanded(
                                   child: GestureDetector(
                                     onTap: () {
-                                      // Get.toNamed(Routes.DETAIL_PAGE,
-                                      //     arguments: {
-                                      //       "movie": currentMovie,
-                                      //       "user": userData
-                                      //     });
+                                      Get.toNamed(Routes.DETAIL_GAME,
+                                          arguments: game);
                                     },
                                     child: CachedNetworkImage(
                                       imageUrl: "${game.backgroundImage}",
