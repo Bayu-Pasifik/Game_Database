@@ -44,85 +44,109 @@ class DetailGameController extends GetxController {
     return ssGame;
   }
 
-  List same = [];
+  // List same = [];
   // ! Same Series
-  Future<List<dynamic>> sameSeries(int id, int page) async {
+  Future<List<GameModels>> sameSeries(int id) async {
     Uri url = Uri.parse(
-        'https://api.rawg.io/api/games/$id/game-series?key=$apikey&page=$page');
+        'https://api.rawg.io/api/games/$id/game-series?key=$apikey');
     var response = await http.get(url);
     var data = json.decode(response.body)["results"];
     next = json.decode(response.body)["next"];
     var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-
-    update();
-    same.addAll(tempdata);
-    print("panjang same : ${same.length}");
-    update();
-    return same;
+    List<GameModels> sameSeries = List<GameModels>.from(tempdata);
+    return sameSeries;
   }
+  // Future<List<dynamic>> sameSeries(int id, int page) async {
+  //   Uri url = Uri.parse(
+  //       'https://api.rawg.io/api/games/$id/game-series?key=$apikey&page=$page');
+  //   var response = await http.get(url);
+  //   var data = json.decode(response.body)["results"];
+  //   next = json.decode(response.body)["next"];
+  //   var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
 
-  List<dynamic> archievement = [];
+  //   update();
+  //   same.addAll(tempdata);
+  //   print("panjang same : ${same.length}");
+  //   update();
+  //   return same;
+  // }
+
+  // List<dynamic> archievement = [];
   // ! Archievement Series
-  Future<List<dynamic>> archievementGame(int id, int page) async {
-    Uri url = Uri.parse(
-        'https://api.rawg.io/api/games/$id/achievements?key=$apikey&page=$page');
+  // Future<List<dynamic>> archievementGame(int id, int page) async {
+  //   Uri url = Uri.parse(
+  //       'https://api.rawg.io/api/games/$id/achievements?key=$apikey&page=$page');
+  //   var response = await http.get(url);
+  //   final data = json.decode(response.body)["results"];
+  //   nextArchivment = json.decode(response.body)["next"];
+  //   final tempdata = data.map((e) => ArchievementGame.fromJson(e)).toList();
+  //   archievement.addAll(tempdata);
+  //   update();
+  //   print("panjang archievement ${archievement.length}");
+  //   return archievement;
+  // }
+  // List<ArchievementGame> archievement = [];
+  Future<List<ArchievementGame>> archievementGame(int id) async {
+    Uri url =
+        Uri.parse('https://api.rawg.io/api/games/$id/achievements?key=$apikey');
     var response = await http.get(url);
     final data = json.decode(response.body)["results"];
     nextArchivment = json.decode(response.body)["next"];
     final tempdata = data.map((e) => ArchievementGame.fromJson(e)).toList();
-    archievement.addAll(tempdata);
-    update();
-    print("panjang archievement ${archievement.length}");
-    return archievement;
+    List<ArchievementGame> archiveData = List<ArchievementGame>.from(tempdata);
+    // archievement.addAll(archiveData);
+    print("isi dari arc : $archiveData");
+    // print("panjang archievement ${archievement.length}");
+    return archiveData;
   }
 
-  void refrshSimilar(int id) async {
-    if (sameRefresh.initialRefresh == true) {
-      hal.value = 1;
-      same.clear();
-      await sameSeries(id, hal.value);
-      update();
-      return sameRefresh.refreshCompleted();
-    } else {
-      return sameRefresh.refreshFailed();
-    }
-  }
+  // void refrshSimilar(int id) async {
+  //   if (sameRefresh.initialRefresh == true) {
+  //     hal.value = 1;
+  //     same.clear();
+  //     await sameSeries(id, hal.value);
+  //     update();
+  //     return sameRefresh.refreshCompleted();
+  //   } else {
+  //     return sameRefresh.refreshFailed();
+  //   }
+  // }
 
-  void loadSimilar(int id) async {
-    if (next != null) {
-      hal.value = hal.value + 1;
+  // void loadSimilar(int id) async {
+  //   if (next != null) {
+  //     hal.value = hal.value + 1;
 
-      await sameSeries(id, hal.value);
-      update();
-      return sameRefresh.loadComplete();
-    } else {
-      return sameRefresh.loadNoData();
-    }
-  }
+  //     await sameSeries(id, hal.value);
+  //     update();
+  //     return sameRefresh.loadComplete();
+  //   } else {
+  //     return sameRefresh.loadNoData();
+  //   }
+  // }
 
-  void refreshArchieve(int id) async {
-    if (archieveRefresh.initialRefresh == true) {
-      halArchive.value = 1;
-      archievement.clear();
-      await archievementGame(id, halArchive.value);
-      update();
-      return archieveRefresh.refreshCompleted();
-    } else {
-      return archieveRefresh.refreshFailed();
-    }
-  }
+  // void refreshArchieve(int id) async {
+  //   if (archieveRefresh.initialRefresh == true) {
+  //     halArchive.value = 1;
+  //     archievement.clear();
+  //     await archievementGame(id, halArchive.value);
+  //     update();
+  //     return archieveRefresh.refreshCompleted();
+  //   } else {
+  //     return archieveRefresh.refreshFailed();
+  //   }
+  // }
 
-  void loadArchieve(int id) async {
-    if (nextArchivment != null) {
-      halArchive.value = halArchive.value + 1;
+  // void loadArchieve(int id) async {
+  //   if (nextArchivment != null) {
+  //     halArchive.value = halArchive.value + 1;
 
-      await archievementGame(id, halArchive.value);
-      update();
-      return archieveRefresh.loadComplete();
-    } else {
-      return archieveRefresh.loadNoData();
-    }
-  }
+  //     await archievementGame(id, halArchive.value);
+  //     update();
+  //     return archieveRefresh.loadComplete();
+  //   } else {
+  //     return archieveRefresh.loadNoData();
+  //   }
+  // }
 
   @override
   void onInit() {

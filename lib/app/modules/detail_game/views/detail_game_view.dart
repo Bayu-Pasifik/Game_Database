@@ -268,15 +268,188 @@ class DetailGameView extends GetView<DetailGameController> {
                         .replaceAll("</p>", "")
                         .replaceAll("<br />", ""),
                     trimLines: 2,
-                    // textAlign: TextAlign.,
                     colorClickableText: Colors.pink,
                     trimMode: TrimMode.Line,
                     trimCollapsedText: 'Show more',
                     trimExpandedText: 'Show less',
-                    moreStyle: const TextStyle(
-                        fontSize: 14, fontWeight: FontWeight.bold),
+                    lessStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: buttonColor),
+                    moreStyle: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                        color: buttonColor),
                   ),
-                )
+                ),
+                Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Archievement",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold, fontSize: 16)),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Load More",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ))
+                        ])),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    height: 150.h,
+                    width: context.width,
+                    // color: Colors.green,
+                    child: FutureBuilder<List<ArchievementGame>>(
+                      future: controller.archievementGame(detail.id!),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          return const Center(
+                              child: Text('No Screenshots Available'));
+                        }
+
+                        return ListView.separated(
+                          separatorBuilder: (context, index) => SizedBox(
+                            height: 10.h,
+                          ),
+                          itemBuilder: (context, index) {
+                            final archivement = snapshot.data![index];
+                            return Material(
+                              elevation: 20,
+                              color: boxColor,
+                              child: ListTile(
+                                leading: CircleAvatar(
+                                    backgroundImage:
+                                        NetworkImage(archivement.image!)),
+                                title: Text(archivement.name!,
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white)),
+                                subtitle: Text(archivement.description!,
+                                    style: GoogleFonts.poppins(
+                                        color: Colors.white)),
+                                isThreeLine: true,
+                              ),
+                            );
+                          },
+                          itemCount: 2,
+                        );
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text("Same Series",
+                              style: GoogleFonts.poppins(
+                                  fontWeight: FontWeight.bold, fontSize: 16)),
+                          TextButton(
+                              onPressed: () {},
+                              child: Text(
+                                "Load More",
+                                style: GoogleFonts.poppins(
+                                    fontWeight: FontWeight.bold, fontSize: 16),
+                              ))
+                        ])),
+                SizedBox(height: 10.h),
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    height: 150.h,
+                    width: context.width,
+                    // color: Colors.green,
+                    child: FutureBuilder<List<GameModels>>(
+                      future: controller.sameSeries(detail.id!),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                              child: CircularProgressIndicator());
+                        } else if (snapshot.hasError) {
+                          return Center(
+                              child: Text('Error: ${snapshot.error}'));
+                        } else if (!snapshot.hasData ||
+                            snapshot.data!.isEmpty) {
+                          return const Center(
+                              child: Text('No Screenshots Available'));
+                        }
+
+                        return ListView.separated(
+                          physics: const BouncingScrollPhysics(),
+                          scrollDirection: Axis.horizontal,
+                          separatorBuilder: (context, index) => SizedBox(
+                            width: 10.h,
+                          ),
+                          itemBuilder: (context, index) {
+                            final sameSeries = snapshot.data![index];
+                            return Column(
+                              children: [
+                                Expanded(
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      // Get.toNamed(Routes.DETAIL_GAME,
+                                      //     arguments: game);
+                                    },
+                                    child: CachedNetworkImage(
+                                      imageUrl: "${sameSeries.backgroundImage}",
+                                      imageBuilder: (context, imageProvider) =>
+                                          Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                          image: DecorationImage(
+                                              image: imageProvider,
+                                              fit: BoxFit.cover),
+                                        ),
+                                      ),
+                                      progressIndicatorBuilder:
+                                          (context, url, downloadProgress) =>
+                                              Center(
+                                        child: CircularProgressIndicator(
+                                            value: downloadProgress.progress),
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Image.asset(
+                                              "assets/images/Image_not_available.png"),
+                                    ),
+                                  ),
+                                ),
+                                Text(
+                                  "${sameSeries.name}",
+                                  style: GoogleFonts.poppins(
+                                      textStyle: const TextStyle(
+                                          overflow: TextOverflow.ellipsis)),
+                                ),
+                                (sameSeries.playtime != null)
+                                    ? Text(
+                                        "${sameSeries.playtime} Hours",
+                                        style: GoogleFonts.poppins(),
+                                      )
+                                    : Text("Null", style: GoogleFonts.poppins())
+                              ],
+                            );
+                          },
+                          itemCount: snapshot.data?.length ?? 0,
+                        );
+                      },
+                    ),
+                  ),
+                ),
               ],
             );
           },
