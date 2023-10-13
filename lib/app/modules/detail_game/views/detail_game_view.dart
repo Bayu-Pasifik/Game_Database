@@ -292,7 +292,7 @@ class DetailGameView extends GetView<DetailGameController> {
                     child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text("Archievement",
+                          Text("Achievement",
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold, fontSize: 16)),
                           TextButton(
@@ -380,7 +380,7 @@ class DetailGameView extends GetView<DetailGameController> {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Container(
-                    height: 250.h,
+                    height: 300.h,
                     width: context.width,
                     // color: Colors.green,
                     child: FutureBuilder<List<GameModels>>(

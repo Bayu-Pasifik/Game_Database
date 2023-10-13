@@ -24,7 +24,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       title: "Game Database",
       theme: controller.theme,
-      home:  HomeView(),
+      home: const HomeView(),
       getPages: AppPages.routes,
     ),
   ));

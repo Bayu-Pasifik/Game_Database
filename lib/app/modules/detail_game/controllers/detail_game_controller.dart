@@ -7,19 +7,18 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
+import 'package:game_database/app/data/constant/utils.dart';
 
 class DetailGameController extends GetxController {
-  RefreshController sameRefresh = RefreshController(initialRefresh: true);
-  RefreshController archieveRefresh = RefreshController(initialRefresh: true);
   var hal = 1.obs;
-  var halArchive = 1.obs;
+  
   String? next = '';
-  String? nextArchivment = '';
+  
   // ! variable untuk slider
   var currentSlider = 0.obs;
   final CarouselController carouselController = CarouselController();
   // ! details
-  String apikey = "7a395681502b437d8cbc489ebee68c6c";
+  
   Future<DetailGame> details(int id) async {
     Uri url = Uri.parse('https://api.rawg.io/api/games/$id?key=$apikey');
     var response = await http.get(url);
@@ -71,32 +70,15 @@ class DetailGameController extends GetxController {
   //   return same;
   // }
 
-  // List<dynamic> archievement = [];
-  // ! Archievement Series
-  // Future<List<dynamic>> archievementGame(int id, int page) async {
-  //   Uri url = Uri.parse(
-  //       'https://api.rawg.io/api/games/$id/achievements?key=$apikey&page=$page');
-  //   var response = await http.get(url);
-  //   final data = json.decode(response.body)["results"];
-  //   nextArchivment = json.decode(response.body)["next"];
-  //   final tempdata = data.map((e) => ArchievementGame.fromJson(e)).toList();
-  //   archievement.addAll(tempdata);
-  //   update();
-  //   print("panjang archievement ${archievement.length}");
-  //   return archievement;
-  // }
-  // List<ArchievementGame> archievement = [];
+  
   Future<List<ArchievementGame>> archievementGame(int id) async {
     Uri url =
         Uri.parse('https://api.rawg.io/api/games/$id/achievements?key=$apikey');
     var response = await http.get(url);
     final data = json.decode(response.body)["results"];
-    nextArchivment = json.decode(response.body)["next"];
     final tempdata = data.map((e) => ArchievementGame.fromJson(e)).toList();
     List<ArchievementGame> archiveData = List<ArchievementGame>.from(tempdata);
-    // archievement.addAll(archiveData);
     print("isi dari arc : $archiveData");
-    // print("panjang archievement ${archievement.length}");
     return archiveData;
   }
 
