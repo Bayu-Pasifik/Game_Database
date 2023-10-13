@@ -7,6 +7,7 @@ import 'package:game_database/app/data/models/archievement.dart';
 import 'package:game_database/app/data/models/detail_game.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/data/models/screenshot_game.dart';
+import 'package:game_database/app/routes/app_pages.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -21,6 +22,7 @@ class DetailGameView extends GetView<DetailGameController> {
   @override
   Widget build(BuildContext context) {
     final GameModels models = Get.arguments;
+    print(models.id);
     return Scaffold(
         appBar: null,
         body: FutureBuilder(
@@ -130,7 +132,9 @@ class DetailGameView extends GetView<DetailGameController> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               IconButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    Get.back();
+                                  },
                                   icon: const Icon(
                                     Icons.arrow_back_ios,
                                     color: Colors.white,
@@ -259,7 +263,7 @@ class DetailGameView extends GetView<DetailGameController> {
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.bold, fontSize: 20.sp)),
                 ),
-                // SizedBox(height: 5.sp),
+                // ! About
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: ReadMoreText(
@@ -282,6 +286,7 @@ class DetailGameView extends GetView<DetailGameController> {
                         color: buttonColor),
                   ),
                 ),
+                // ! Archievement
                 Padding(
                     padding: const EdgeInsets.all(10),
                     child: Row(
@@ -291,7 +296,10 @@ class DetailGameView extends GetView<DetailGameController> {
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold, fontSize: 16)),
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.toNamed(Routes.ACHIEVEMENT_PAGE,
+                                    arguments: models);
+                              },
                               child: Text(
                                 "Load More",
                                 style: GoogleFonts.poppins(
@@ -359,7 +367,9 @@ class DetailGameView extends GetView<DetailGameController> {
                               style: GoogleFonts.poppins(
                                   fontWeight: FontWeight.bold, fontSize: 16)),
                           TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.toNamed(Routes.SIMILAR_PAGE);
+                              },
                               child: Text(
                                 "Load More",
                                 style: GoogleFonts.poppins(
@@ -370,7 +380,7 @@ class DetailGameView extends GetView<DetailGameController> {
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: Container(
-                    height: 150.h,
+                    height: 250.h,
                     width: context.width,
                     // color: Colors.green,
                     child: FutureBuilder<List<GameModels>>(
@@ -397,50 +407,61 @@ class DetailGameView extends GetView<DetailGameController> {
                           ),
                           itemBuilder: (context, index) {
                             final sameSeries = snapshot.data![index];
+                            // print("${sameSeries.backgroundImage}");
                             return Column(
                               children: [
                                 Expanded(
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      // Get.toNamed(Routes.DETAIL_GAME,
-                                      //     arguments: game);
-                                    },
-                                    child: CachedNetworkImage(
-                                      imageUrl: "${sameSeries.backgroundImage}",
-                                      imageBuilder: (context, imageProvider) =>
-                                          Container(
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(8),
-                                          image: DecorationImage(
-                                              image: imageProvider,
-                                              fit: BoxFit.cover),
+                                  child: SizedBox(
+                                    width: 100.w,
+                                    height: 200.h,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        // Get.toNamed(Routes.DETAIL_GAME,
+                                        //     arguments: game);
+                                      },
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            "${sameSeries.backgroundImage}",
+                                        imageBuilder:
+                                            (context, imageProvider) =>
+                                                Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            image: DecorationImage(
+                                                image: imageProvider,
+                                                fit: BoxFit.cover),
+                                          ),
                                         ),
+                                        progressIndicatorBuilder:
+                                            (context, url, downloadProgress) =>
+                                                Center(
+                                          child: CircularProgressIndicator(
+                                              value: downloadProgress.progress),
+                                        ),
+                                        errorWidget: (context, url, error) =>
+                                            Image.asset(
+                                                "assets/images/Image_not_available.png"),
                                       ),
-                                      progressIndicatorBuilder:
-                                          (context, url, downloadProgress) =>
-                                              Center(
-                                        child: CircularProgressIndicator(
-                                            value: downloadProgress.progress),
-                                      ),
-                                      errorWidget: (context, url, error) =>
-                                          Image.asset(
-                                              "assets/images/Image_not_available.png"),
                                     ),
                                   ),
                                 ),
-                                Text(
-                                  "${sameSeries.name}",
-                                  style: GoogleFonts.poppins(
-                                      textStyle: const TextStyle(
-                                          overflow: TextOverflow.ellipsis)),
+                                Expanded(
+                                  child: Container(
+                                    width: 100.w,
+                                    height: 100.h,
+                                    child: Text(
+                                      "${sameSeries.name}",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      softWrap: true,
+                                      textAlign: TextAlign.center,
+                                      style: GoogleFonts.poppins(
+                                          textStyle: const TextStyle(
+                                              overflow: TextOverflow.ellipsis)),
+                                    ),
+                                  ),
                                 ),
-                                (sameSeries.playtime != null)
-                                    ? Text(
-                                        "${sameSeries.playtime} Hours",
-                                        style: GoogleFonts.poppins(),
-                                      )
-                                    : Text("Null", style: GoogleFonts.poppins())
                               ],
                             );
                           },

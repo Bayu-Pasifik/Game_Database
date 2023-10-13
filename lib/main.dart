@@ -24,15 +24,7 @@ void main() async {
       debugShowCheckedModeBanner: false,
       title: "Game Database",
       theme: controller.theme,
-      home: FutureBuilder(
-        future: Future.delayed(const Duration(seconds: 5)),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          return const HomeView();
-        },
-      ),
+      home:  HomeView(),
       getPages: AppPages.routes,
     ),
   ));

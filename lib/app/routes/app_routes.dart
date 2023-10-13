@@ -7,6 +7,8 @@ abstract class Routes {
   static const DETAIL_GAME = _Paths.DETAIL_GAME;
   static const LOAD_MORE = _Paths.LOAD_MORE;
   static const SEARCH = _Paths.SEARCH;
+  static const ACHIEVEMENT_PAGE = _Paths.ACHIEVEMENT_PAGE;
+  static const SIMILAR_PAGE = _Paths.SIMILAR_PAGE;
 }
 
 abstract class _Paths {
@@ -15,4 +17,6 @@ abstract class _Paths {
   static const DETAIL_GAME = '/detail-game';
   static const LOAD_MORE = '/load-more';
   static const SEARCH = '/search';
+  static const ACHIEVEMENT_PAGE = '/achievement-page';
+  static const SIMILAR_PAGE = '/similar-page';
 }

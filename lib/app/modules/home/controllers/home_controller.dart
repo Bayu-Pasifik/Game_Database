@@ -10,11 +10,10 @@ import 'dart:convert';
 
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-class HomeController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class HomeController extends GetxController with GetTickerProviderStateMixin {
   String apikey = "7a395681502b437d8cbc489ebee68c6c";
   // ! Action
-  late TabController tabController;
+  late TabController? tabController;
 
   // ! change theme
   final box = GetStorage();
@@ -94,7 +93,10 @@ class HomeController extends GetxController
     Get.changeTheme(theme);
   }
 
+// late TabController tabController;
   List<Genres> genreList = [];
+  bool isTabControllerInitialized = false;
+
   Future<List<Genres>> getGenre() async {
     Uri url = Uri.parse('https://api.rawg.io/api/genres?key=$apikey');
     var response = await http.get(url);
@@ -103,6 +105,8 @@ class HomeController extends GetxController
     List<Genres> allgenres = List<Genres>.from(data);
     print(allgenres);
     genreList.addAll(allgenres);
+    // Set flag to true when the controller is initialized
+    isTabControllerInitialized = true;
     return genreList;
   }
 
@@ -148,45 +152,45 @@ class HomeController extends GetxController
       PagingController<int, GameModels>(firstPageKey: 1);
   void handleTabChange() {
     // Check if the current tab is selected
-    if (tabController.indexIsChanging) {
+    if (tabController!.indexIsChanging) {
       // Update the corresponding PagingController
-      if (tabController.index == 0) {
+      if (tabController!.index == 0) {
         actionGame.refresh();
-      } else if (tabController.index == 1) {
+      } else if (tabController!.index == 1) {
         indieGame.refresh();
-      } else if (tabController.index == 2) {
+      } else if (tabController!.index == 2) {
         adventureGame.refresh();
-      } else if (tabController.index == 3) {
+      } else if (tabController!.index == 3) {
         rpgGame.refresh();
-      } else if (tabController.index == 4) {
+      } else if (tabController!.index == 4) {
         strategyGame.refresh();
-      } else if (tabController.index == 5) {
+      } else if (tabController!.index == 5) {
         shooterGame.refresh();
-      } else if (tabController.index == 6) {
+      } else if (tabController!.index == 6) {
         casualGame.refresh();
-      } else if (tabController.index == 7) {
+      } else if (tabController!.index == 7) {
         simulationGame.refresh();
-      } else if (tabController.index == 8) {
+      } else if (tabController!.index == 8) {
         puzzleGame.refresh();
-      } else if (tabController.index == 9) {
+      } else if (tabController!.index == 9) {
         arcadeGame.refresh();
-      } else if (tabController.index == 10) {
+      } else if (tabController!.index == 10) {
         platformerGame.refresh();
-      } else if (tabController.index == 11) {
+      } else if (tabController!.index == 11) {
         mmoGame.refresh();
-      } else if (tabController.index == 12) {
+      } else if (tabController!.index == 12) {
         racingGame.refresh();
-      } else if (tabController.index == 13) {
+      } else if (tabController!.index == 13) {
         sportsGame.refresh();
-      } else if (tabController.index == 14) {
+      } else if (tabController!.index == 14) {
         fightingGame.refresh();
-      } else if (tabController.index == 15) {
+      } else if (tabController!.index == 15) {
         fammilyGame.refresh();
-      } else if (tabController.index == 16) {
+      } else if (tabController!.index == 16) {
         boardGame.refresh();
-      } else if (tabController.index == 17) {
+      } else if (tabController!.index == 17) {
         educationalGame.refresh();
-      } else if (tabController.index == 18) {
+      } else if (tabController!.index == 18) {
         cardGame.refresh();
       }
     }
@@ -667,15 +671,20 @@ class HomeController extends GetxController
     return modelGame;
   }
 
+  void initTabController(int length) {
+    tabController = TabController(vsync: this, length: length);
+  }
+
   @override
   void onInit() async {
     super.onInit();
-    // genre = getGenre();
-    await getGenre();
-    tabController = TabController(
-      length: genreList.length,
-      vsync: this,
-    );
+    //  tabController = TabController(vsync: this, length: 0); // Inisialisasi dengan length 0
+    // getGenre();
+    // tabController = TabController(
+    //   length: genreList.length,
+    //   vsync: this,
+    // );
+    print("on init tabcontroller");
     actionGame.addPageRequestListener((pageKey) {
       genreAction(pageKey);
     });
@@ -733,5 +742,30 @@ class HomeController extends GetxController
     cardGame.addPageRequestListener((pageKey) {
       genreCard(pageKey);
     });
+  }
+
+  @override
+  void dispose() {
+    tabController?.dispose();
+    actionGame.dispose();
+    indieGame.dispose();
+    adventureGame.dispose();
+    rpgGame.dispose();
+    strategyGame.dispose();
+    shooterGame.dispose();
+    casualGame.dispose();
+    simulationGame.dispose();
+    puzzleGame.dispose();
+    fammilyGame.dispose();
+    arcadeGame.dispose();
+    platformerGame.dispose();
+    mmoGame.dispose();
+    racingGame.dispose();
+    sportsGame.dispose();
+    fightingGame.dispose();
+    boardGame.dispose();
+    educationalGame.dispose();
+    cardGame.dispose();
+    super.dispose();
   }
 }
