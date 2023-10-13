@@ -55,21 +55,6 @@ class DetailGameController extends GetxController {
     List<GameModels> sameSeries = List<GameModels>.from(tempdata);
     return sameSeries;
   }
-  // Future<List<dynamic>> sameSeries(int id, int page) async {
-  //   Uri url = Uri.parse(
-  //       'https://api.rawg.io/api/games/$id/game-series?key=$apikey&page=$page');
-  //   var response = await http.get(url);
-  //   var data = json.decode(response.body)["results"];
-  //   next = json.decode(response.body)["next"];
-  //   var tempdata = data.map((e) => GameModels.fromJson(e)).toList();
-
-  //   update();
-  //   same.addAll(tempdata);
-  //   print("panjang same : ${same.length}");
-  //   update();
-  //   return same;
-  // }
-
   
   Future<List<ArchievementGame>> archievementGame(int id) async {
     Uri url =

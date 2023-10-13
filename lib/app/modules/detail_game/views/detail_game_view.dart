@@ -22,7 +22,7 @@ class DetailGameView extends GetView<DetailGameController> {
   @override
   Widget build(BuildContext context) {
     final GameModels models = Get.arguments;
-    print(models.id);
+    print("id:${models.id}");
     return Scaffold(
         appBar: null,
         body: FutureBuilder(
@@ -358,6 +358,7 @@ class DetailGameView extends GetView<DetailGameController> {
                   ),
                 ),
                 SizedBox(height: 10.h),
+                // ! Same Series
                 Padding(
                     padding: const EdgeInsets.all(10),
                     child: Row(
@@ -368,7 +369,8 @@ class DetailGameView extends GetView<DetailGameController> {
                                   fontWeight: FontWeight.bold, fontSize: 16)),
                           TextButton(
                               onPressed: () {
-                                Get.toNamed(Routes.SIMILAR_PAGE);
+                                Get.toNamed(Routes.SIMILAR_PAGE,
+                                    arguments: models);
                               },
                               child: Text(
                                 "Load More",
