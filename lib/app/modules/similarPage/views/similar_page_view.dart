@@ -14,7 +14,6 @@ class SimilarPageView extends GetView<SimilarPageController> {
   const SimilarPageView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final GameModels models = Get.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text(

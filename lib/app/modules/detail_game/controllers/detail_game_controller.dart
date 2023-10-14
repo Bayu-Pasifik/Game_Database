@@ -6,8 +6,8 @@ import 'package:game_database/app/data/models/screenshot_game.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:game_database/app/data/constant/utils.dart';
+import 'package:intl/intl.dart';
 
 class DetailGameController extends GetxController {
   var hal = 1.obs;
@@ -67,57 +67,13 @@ class DetailGameController extends GetxController {
     return archiveData;
   }
 
-  // void refrshSimilar(int id) async {
-  //   if (sameRefresh.initialRefresh == true) {
-  //     hal.value = 1;
-  //     same.clear();
-  //     await sameSeries(id, hal.value);
-  //     update();
-  //     return sameRefresh.refreshCompleted();
-  //   } else {
-  //     return sameRefresh.refreshFailed();
-  //   }
-  // }
-
-  // void loadSimilar(int id) async {
-  //   if (next != null) {
-  //     hal.value = hal.value + 1;
-
-  //     await sameSeries(id, hal.value);
-  //     update();
-  //     return sameRefresh.loadComplete();
-  //   } else {
-  //     return sameRefresh.loadNoData();
-  //   }
-  // }
-
-  // void refreshArchieve(int id) async {
-  //   if (archieveRefresh.initialRefresh == true) {
-  //     halArchive.value = 1;
-  //     archievement.clear();
-  //     await archievementGame(id, halArchive.value);
-  //     update();
-  //     return archieveRefresh.refreshCompleted();
-  //   } else {
-  //     return archieveRefresh.refreshFailed();
-  //   }
-  // }
-
-  // void loadArchieve(int id) async {
-  //   if (nextArchivment != null) {
-  //     halArchive.value = halArchive.value + 1;
-
-  //     await archievementGame(id, halArchive.value);
-  //     update();
-  //     return archieveRefresh.loadComplete();
-  //   } else {
-  //     return archieveRefresh.loadNoData();
-  //   }
-  // }
+  String formatDate(DateTime date) {
+  final outputFormat = DateFormat("yyyy-MM-dd");
+  return outputFormat.format(date);
+}
 
   @override
   void onInit() {
-    print("init detail");
     super.onInit();
   }
 }

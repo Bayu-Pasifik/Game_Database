@@ -1,18 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_database/app/data/constant/color.dart';
 import 'package:game_database/app/data/models/archievement.dart';
-import 'package:game_database/app/data/models/detail_game.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/data/models/screenshot_game.dart';
 import 'package:game_database/app/routes/app_pages.dart';
-
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:readmore/readmore.dart';
 
 import '../controllers/detail_game_controller.dart';
@@ -90,8 +89,10 @@ class DetailGameView extends GetView<DetailGameController> {
                               );
                             }).toList(),
                           ),
+                          // ! DOT for corousel
                           Positioned(
-                            top: 200,
+                            top: 200.h,
+                            left: 120.w,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: ssGames.asMap().entries.map((entry) {
@@ -107,7 +108,7 @@ class DetailGameView extends GetView<DetailGameController> {
                                             : 8,
                                         height: 8,
                                         margin: const EdgeInsets.symmetric(
-                                          vertical: 8.0,
+                                          vertical: 10,
                                           horizontal: 4.0,
                                         ),
                                         decoration: BoxDecoration(
@@ -135,16 +136,17 @@ class DetailGameView extends GetView<DetailGameController> {
                                   onPressed: () {
                                     Get.back();
                                   },
-                                  icon: const Icon(
-                                    Icons.arrow_back_ios,
+                                  icon: const FaIcon(
+                                    FontAwesomeIcons.angleLeft,
                                     color: Colors.white,
                                   )),
                               IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(
-                                    Icons.favorite,
-                                    color: Colors.white,
-                                  ))
+                                onPressed: () {},
+                                icon: const FaIcon(
+                                  FontAwesomeIcons.globe,
+                                  color: Colors.white,
+                                ),
+                              )
                             ],
                           ),
                           Positioned(
@@ -259,11 +261,11 @@ class DetailGameView extends GetView<DetailGameController> {
                 SizedBox(height: 10.h),
                 Padding(
                   padding: const EdgeInsets.all(10),
-                  child: Text("About",
+                  child: Text("Synopsis",
                       style: GoogleFonts.poppins(
                           fontWeight: FontWeight.bold, fontSize: 20.sp)),
                 ),
-                // ! About
+                // ! Synopsis
                 Padding(
                   padding: const EdgeInsets.all(10),
                   child: ReadMoreText(
@@ -284,6 +286,142 @@ class DetailGameView extends GetView<DetailGameController> {
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
                         color: buttonColor),
+                  ),
+                ),
+                SizedBox(height: 10.h),
+                ExpandablePanel(
+                  theme: ExpandableThemeData(iconColor: textColor),
+                  collapsed: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                        "You can view more information about this game here",
+                        style: GoogleFonts.poppins(color: textColor)),
+                  ),
+                  header: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Text(
+                      "About Game",
+                      style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.bold, fontSize: 20.sp),
+                    ),
+                  ),
+                  expanded: Table(
+                    border: TableBorder.all(
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(8)),
+                        color: textColor),
+                    children: [
+                      TableRow(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            "Original Title",
+                            style: GoogleFonts.poppins(),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            (detail.nameOriginal != "")
+                                ? "${detail.nameOriginal}"
+                                : "${detail.name}",
+                            style: GoogleFonts.poppins(),
+                          ),
+                        )
+                      ]),
+                      TableRow(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            "Genres",
+                            style: GoogleFonts.poppins(),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: detail.genres!
+                                  .map((item) => Text("${item.name}"))
+                                  .toList()),
+                        )
+                      ]),
+                      TableRow(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            "released",
+                            style: GoogleFonts.poppins(),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            controller.formatDate(detail.released!),
+                            style: GoogleFonts.poppins(),
+                          ),
+                        )
+                      ]),
+                      TableRow(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(10),
+                            child: Text(
+                              "Developer",
+                              style: GoogleFonts.poppins(),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: detail.developers!.map((item) {
+                                return Text(
+                                  item.name!,
+                                  style: GoogleFonts.poppins(),
+                                );
+                              }).toList(),
+                            ),
+                          ),
+                        ],
+                      ),
+                      TableRow(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            "Publisher",
+                            style: GoogleFonts.poppins(),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: detail.publishers!
+                                  .map((item) => Text(item.name!,
+                                      style: GoogleFonts.poppins()))
+                                  .toList()),
+                        )
+                      ]),
+                      TableRow(children: [
+                        Padding(
+                          padding: const EdgeInsets.all(10),
+                          child: Text(
+                            "Availabel at",
+                            style: GoogleFonts.poppins(),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: detail.platforms!
+                                  .map((item) => Text("${item.platform!.name}"))
+                                  .toList()),
+                        )
+                      ]),
+                    ],
                   ),
                 ),
                 // ! Archievement
