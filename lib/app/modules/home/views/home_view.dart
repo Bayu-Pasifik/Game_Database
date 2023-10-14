@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_database/app/data/constant/color.dart';
+import 'package:game_database/app/data/constant/utils.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -39,11 +40,9 @@ class HomeView extends GetView<HomeController> {
         return Scaffold(
             floatingActionButton: FloatingActionButton(
               onPressed: () {
-                print(controller.box.getValues());
-
-                controller.changeTheme(controller.isDarkmode.value);
+                controller.changeTheme(!isDarkmode.value);
               },
-              child: Obx(() => controller.isDarkmode.isFalse
+              child: Obx(() => isDarkmode.isTrue
                   ? const Icon(Icons.sunny)
                   : const Icon(Icons.mode_night_outlined)),
             ),
@@ -229,7 +228,7 @@ class HomeView extends GetView<HomeController> {
                                         .addPostFrameCallback((timeStamp) {
                                       Get.snackbar("No More Item",
                                           "No more Achievement Data",
-                                          colorText: textColor,
+                                          colorText: darkTextColor,
                                           snackPosition: SnackPosition.BOTTOM,
                                           isDismissible: true,
                                           dismissDirection:

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:game_database/app/data/constant/color.dart';
+import 'package:game_database/app/data/constant/utils.dart';
 import 'package:game_database/app/data/models/archievement.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/data/models/screenshot_game.dart';
@@ -114,12 +115,21 @@ class DetailGameView extends GetView<DetailGameController> {
                                           shape: BoxShape.rectangle,
                                           borderRadius: const BorderRadius.all(
                                               Radius.circular(18)),
-                                          color: Colors.green.withOpacity(
-                                            controller.currentSlider.value ==
-                                                    entry.key
-                                                ? 0.9
-                                                : 0.4,
-                                          ),
+                                          color: isDarkmode.isTrue
+                                              ? buttonColor.withOpacity(
+                                                  controller.currentSlider
+                                                              .value ==
+                                                          entry.key
+                                                      ? 0.9
+                                                      : 0.4,
+                                                )
+                                              : whiteBox.withOpacity(
+                                                  controller.currentSlider
+                                                              .value ==
+                                                          entry.key
+                                                      ? 0.9
+                                                      : 0.4,
+                                                ),
                                         ),
                                       );
                                     },
@@ -158,12 +168,15 @@ class DetailGameView extends GetView<DetailGameController> {
                                 width: 200.w,
                                 height: 50.h,
                                 decoration: BoxDecoration(
-                                    color: boxColor,
+                                    color:
+                                        isDarkmode.isTrue ? boxColor : whiteBox,
                                     borderRadius: BorderRadius.circular(18)),
                                 child: Center(
                                   child: Text(models.name!,
                                       style: GoogleFonts.poppins(
-                                        color: buttonColor,
+                                        color: isDarkmode.isTrue
+                                            ? buttonColor
+                                            : darkTextColor,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -188,22 +201,30 @@ class DetailGameView extends GetView<DetailGameController> {
                         width: 100.w,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(9),
-                            color: boxColor),
+                            color: isDarkmode.isTrue ? boxColor : whiteBox),
                         child: Column(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.access_time_outlined,
                               size: 50,
-                              color: Colors.grey,
+                              color: isDarkmode.isTrue
+                                  ? Colors.grey
+                                  : Colors.white,
                             ),
                             SizedBox(height: 5.h),
                             Text("Playtime",
                                 style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500)),
+                                    color: isDarkmode.isTrue
+                                        ? buttonColor
+                                        : darkTextColor,
+                                    fontWeight: FontWeight.w600)),
                             SizedBox(height: 5.h),
                             Text("${detail.playtime} Hours",
                                 style: GoogleFonts.poppins(
-                                    fontWeight: FontWeight.w500))
+                                    color: isDarkmode.isTrue
+                                        ? buttonColor
+                                        : darkTextColor,
+                                    fontWeight: FontWeight.w600))
                           ],
                         ),
                       ),
@@ -213,21 +234,29 @@ class DetailGameView extends GetView<DetailGameController> {
                         width: 100.w,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(9),
-                            color: boxColor),
+                            color: isDarkmode.isTrue ? boxColor : whiteBox),
                         child: Column(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.dashboard,
                               size: 50,
-                              color: Colors.grey,
+                              color: isDarkmode.isTrue
+                                  ? Colors.grey
+                                  : Colors.white,
                             ),
                             SizedBox(height: 5.h),
                             Text("Category",
                                 style: GoogleFonts.poppins(
+                                    color: isDarkmode.isTrue
+                                        ? buttonColor
+                                        : darkTextColor,
                                     fontWeight: FontWeight.w500)),
                             SizedBox(height: 5.h),
                             Text("${detail.genres![0].name}",
                                 style: GoogleFonts.poppins(
+                                    color: isDarkmode.isTrue
+                                        ? buttonColor
+                                        : darkTextColor,
                                     fontWeight: FontWeight.w500))
                           ],
                         ),
@@ -238,21 +267,29 @@ class DetailGameView extends GetView<DetailGameController> {
                         width: 100.w,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(9),
-                            color: boxColor),
+                            color: isDarkmode.isTrue ? boxColor : whiteBox),
                         child: Column(
                           children: [
-                            const Icon(
+                            Icon(
                               Icons.star,
                               size: 50,
-                              color: Colors.grey,
+                              color: isDarkmode.isTrue
+                                  ? Colors.grey
+                                  : Colors.white,
                             ),
                             SizedBox(height: 5.h),
                             Text("Rating",
                                 style: GoogleFonts.poppins(
+                                    color: isDarkmode.isTrue
+                                        ? buttonColor
+                                        : darkTextColor,
                                     fontWeight: FontWeight.w500)),
                             SizedBox(height: 5.h),
                             Text("${detail.rating} Stars",
                                 style: GoogleFonts.poppins(
+                                    color: isDarkmode.isTrue
+                                        ? buttonColor
+                                        : darkTextColor,
                                     fontWeight: FontWeight.w500))
                           ],
                         ),
@@ -283,21 +320,29 @@ class DetailGameView extends GetView<DetailGameController> {
                     lessStyle: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: buttonColor),
+                        color: isDarkmode.isTrue ? buttonColor : whiteBox),
                     moreStyle: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.bold,
-                        color: buttonColor),
+                        color: isDarkmode.isTrue ? buttonColor : whiteBox),
+                    style: GoogleFonts.poppins(fontWeight: FontWeight.w500),
                   ),
                 ),
                 SizedBox(height: 10.h),
                 ExpandablePanel(
-                  theme: ExpandableThemeData(iconColor: textColor),
+                  theme: ExpandableThemeData(
+                      iconColor:
+                          isDarkmode.isTrue ? buttonColor : whiteThemeText),
                   collapsed: Padding(
                     padding: const EdgeInsets.all(10),
                     child: Text(
                         "You can view more information about this game here",
-                        style: GoogleFonts.poppins(color: textColor)),
+                        style: GoogleFonts.poppins(
+                          fontWeight: FontWeight.w500,
+                          color: isDarkmode.isTrue
+                              ? darkTextColor
+                              : whiteThemeText,
+                        )),
                   ),
                   header: Padding(
                     padding: const EdgeInsets.all(10),
@@ -309,9 +354,9 @@ class DetailGameView extends GetView<DetailGameController> {
                   ),
                   expanded: Table(
                     border: TableBorder.all(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(8)),
-                        color: textColor),
+                      borderRadius: const BorderRadius.all(Radius.circular(8)),
+                      color: isDarkmode.isTrue ? darkTextColor : whiteThemeText,
+                    ),
                     children: [
                       TableRow(children: [
                         Padding(
@@ -352,7 +397,7 @@ class DetailGameView extends GetView<DetailGameController> {
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
-                            "released",
+                            "Released",
                             style: GoogleFonts.poppins(),
                           ),
                         ),
@@ -410,7 +455,7 @@ class DetailGameView extends GetView<DetailGameController> {
                         Padding(
                           padding: const EdgeInsets.all(10),
                           child: Text(
-                            "Availabel at",
+                            "Available at",
                             style: GoogleFonts.poppins(),
                           ),
                         ),
@@ -465,7 +510,7 @@ class DetailGameView extends GetView<DetailGameController> {
                         } else if (!snapshot.hasData ||
                             snapshot.data!.isEmpty) {
                           return const Center(
-                              child: Text('No Screenshots Available'));
+                              child: Text('No Achievement Available'));
                         }
 
                         return ListView.separated(
@@ -475,18 +520,27 @@ class DetailGameView extends GetView<DetailGameController> {
                           itemBuilder: (context, index) {
                             final archivement = snapshot.data![index];
                             return Material(
+                              borderRadius: BorderRadius.circular(9),
                               elevation: 20,
-                              color: boxColor,
+                              color: isDarkmode.isTrue ? boxColor : whiteBox,
                               child: ListTile(
                                 leading: CircleAvatar(
                                     backgroundImage:
                                         NetworkImage(archivement.image!)),
                                 title: Text(archivement.name!,
                                     style: GoogleFonts.poppins(
-                                        color: Colors.white)),
+                                      fontWeight: FontWeight.w500,
+                                      color: isDarkmode.isTrue
+                                          ? buttonColor
+                                          : darkTextColor,
+                                    )),
                                 subtitle: Text(archivement.description!,
                                     style: GoogleFonts.poppins(
-                                        color: Colors.white)),
+                                      fontWeight: FontWeight.w500,
+                                      color: isDarkmode.isTrue
+                                          ? buttonColor
+                                          : darkTextColor,
+                                    )),
                                 isThreeLine: true,
                               ),
                             );
@@ -538,7 +592,7 @@ class DetailGameView extends GetView<DetailGameController> {
                         } else if (!snapshot.hasData ||
                             snapshot.data!.isEmpty) {
                           return const Center(
-                              child: Text('No Screenshots Available'));
+                              child: Text('No Same Series Available'));
                         }
 
                         return ListView.separated(

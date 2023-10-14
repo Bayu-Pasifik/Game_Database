@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_database/app/data/constant/color.dart';
+import 'package:game_database/app/data/constant/utils.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 
 import 'package:get/get.dart';
@@ -18,15 +19,15 @@ class SimilarPageView extends GetView<SimilarPageController> {
       appBar: AppBar(
         title: Text(
           'Similar Game',
-          style: GoogleFonts.poppins(color: textColor),
+          style: GoogleFonts.poppins(color: darkTextColor),
         ),
         centerTitle: true,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios, color: textColor),
+          icon: Icon(Icons.arrow_back_ios, color: darkTextColor),
           onPressed: () => Get.back(),
         ),
         elevation: 0,
-        backgroundColor: darkTheme,
+        backgroundColor: isDarkmode.isTrue ? darkTheme : whiteBox,
       ),
       body: PagedGridView<int, GameModels>(
         padding: EdgeInsets.all(10.w),
@@ -89,7 +90,9 @@ class SimilarPageView extends GetView<SimilarPageController> {
               if (controller.noMoreItems.value) {
                 WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                   Get.snackbar("No More Item", "No more similar games",
-                      colorText: textColor,
+                      colorText: darkTextColor,
+                      overlayBlur: 5,
+                      backgroundColor: isDarkmode.isTrue ? boxColor : whiteBox,
                       snackPosition: SnackPosition.BOTTOM,
                       isDismissible: true,
                       dismissDirection: DismissDirection.startToEnd,

@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:game_database/app/data/constant/color.dart';
+import 'package:game_database/app/data/constant/utils.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/data/models/genres.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class HomeController extends GetxController with GetTickerProviderStateMixin {
@@ -17,83 +16,20 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
 
   // ! change theme
   final box = GetStorage();
-  var isDarkmode = false.obs;
 
   bool get isDark => box.read('darkmode') ?? false;
 
-  ThemeData get theme => isDark
-      ? ThemeData(
-          useMaterial3: true,
-          primarySwatch: Colors.amber,
-          textTheme: TextTheme(
-            displayLarge: GoogleFonts.poppins(color: textColor),
-            bodyLarge: GoogleFonts.poppins(color: textColor),
-            bodyMedium: GoogleFonts.poppins(color: textColor),
-            bodySmall: GoogleFonts.poppins(color: textColor),
-            displayMedium: GoogleFonts.poppins(color: textColor),
-            displaySmall: GoogleFonts.poppins(color: textColor),
-            headlineLarge: GoogleFonts.poppins(color: textColor),
-            headlineMedium: GoogleFonts.poppins(color: textColor),
-            headlineSmall: GoogleFonts.poppins(color: textColor),
-            labelLarge: GoogleFonts.poppins(color: textColor),
-            labelMedium: GoogleFonts.poppins(color: textColor),
-            labelSmall: GoogleFonts.poppins(color: textColor),
-            titleLarge: GoogleFonts.poppins(color: textColor),
-            titleMedium: GoogleFonts.poppins(color: textColor),
-            titleSmall: GoogleFonts.poppins(color: textColor),
-          ),
-          tabBarTheme: const TabBarTheme(
-            labelColor: Colors.white,
-            unselectedLabelColor: Color(0XFF858597),
-            indicatorColor: Colors.transparent,
-            indicator: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Color.fromARGB(255, 101, 9, 206),
-            ),
-          ),
-          scaffoldBackgroundColor: darkTheme)
-      : ThemeData(
-          useMaterial3: true,
-          primarySwatch: Colors.amber,
-          textTheme: TextTheme(
-            displayLarge: GoogleFonts.poppins(color: whiteThemeText),
-            bodyLarge: GoogleFonts.poppins(color: whiteThemeText),
-            bodyMedium: GoogleFonts.poppins(color: whiteThemeText),
-            bodySmall: GoogleFonts.poppins(color: whiteThemeText),
-            displayMedium: GoogleFonts.poppins(color: whiteThemeText),
-            displaySmall: GoogleFonts.poppins(color: whiteThemeText),
-            headlineLarge: GoogleFonts.poppins(color: whiteThemeText),
-            headlineMedium: GoogleFonts.poppins(color: whiteThemeText),
-            headlineSmall: GoogleFonts.poppins(color: whiteThemeText),
-            labelLarge: GoogleFonts.poppins(color: whiteThemeText),
-            labelMedium: GoogleFonts.poppins(color: whiteThemeText),
-            labelSmall: GoogleFonts.poppins(color: whiteThemeText),
-            titleLarge: GoogleFonts.poppins(color: whiteThemeText),
-            titleMedium: GoogleFonts.poppins(color: whiteThemeText),
-            titleSmall: GoogleFonts.poppins(color: whiteThemeText),
-          ),
-          tabBarTheme: const TabBarTheme(
-            labelColor: Colors.white,
-            unselectedLabelColor: Color(0XFF858597),
-            indicatorColor: Colors.transparent,
-            indicator: BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-              color: Color.fromARGB(255, 101, 9, 206),
-            ),
-          ),
-          scaffoldBackgroundColor: withTheme);
-
   void changeTheme(bool val) {
-    if (isDarkmode.value == true) {
-      box.write('darkmode', val);
-    } else {
-      box.remove('darkmode');
-    }
-    isDarkmode.toggle();
-    Get.changeTheme(theme);
+  if (val == true) {
+    box.write("darkmode", true);
+    Get.changeTheme(themeDark);
+  } else {
+    box.remove("darkmode");
+    Get.changeTheme(themeWhite);
   }
+  isDarkmode.value = val; // Mengatur nilai isDarkmode sesuai dengan val yang diterima.
+}
 
-// late TabController tabController;
   List<Genres> genreList = [];
   bool isTabControllerInitialized = false;
 
@@ -204,8 +140,6 @@ class HomeController extends GetxController with GetTickerProviderStateMixin {
       }
     }
   }
-
-
 
 // Update the genreAction, genresIndie, and genreAdventure methods to return a list of GameModels
   void genreAction(int pageKey) async {

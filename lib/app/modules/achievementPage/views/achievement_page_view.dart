@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:game_database/app/data/constant/color.dart';
+import 'package:game_database/app/data/constant/utils.dart';
 import 'package:game_database/app/data/models/archievement.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 
@@ -20,15 +20,15 @@ class AchievementPageView extends GetView<AchievementPageController> {
         appBar: AppBar(
           title: Text(
             'All Achievement ${models.name}',
-            style: GoogleFonts.poppins(color: textColor),
+            style: GoogleFonts.poppins(color: darkTextColor),
           ),
           centerTitle: true,
           leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios, color: textColor),
+            icon: Icon(Icons.arrow_back_ios, color: darkTextColor),
             onPressed: () => Get.back(),
           ),
           elevation: 0,
-          backgroundColor: darkTheme,
+          backgroundColor: isDarkmode.isTrue ? darkTheme : whiteBox,
         ),
         body: PagedListView<int, ArchievementGame>.separated(
           padding: const EdgeInsets.all(10),
@@ -39,17 +39,19 @@ class AchievementPageView extends GetView<AchievementPageController> {
               return Material(
                 elevation: 10,
                 borderRadius: BorderRadius.circular(18),
-                color: boxColor,
+                color: isDarkmode.isTrue ? boxColor : whiteBox,
                 child: ListTile(
                   leading: CircleAvatar(
                       backgroundImage: NetworkImage("${game.image}")),
                   title: Text(
                     "${game.name}",
-                    style: GoogleFonts.poppins(color: textColor),
+                    style: GoogleFonts.poppins(
+                        color: isDarkmode.isTrue ? buttonColor : darkTextColor),
                   ),
                   subtitle: Text(
                     "${game.description}",
-                    style: GoogleFonts.poppins(color: textColor),
+                    style: GoogleFonts.poppins(
+                        color: isDarkmode.isTrue ? buttonColor : darkTextColor),
                   ),
                 ),
               );
@@ -63,7 +65,10 @@ class AchievementPageView extends GetView<AchievementPageController> {
                 if (controller.noMoreItems.value) {
                   WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
                     Get.snackbar("No More Item", "No more Achievement Data",
-                        colorText: textColor,
+                        colorText: darkTextColor,
+                        overlayBlur: 5,
+                        backgroundColor:
+                            isDarkmode.isTrue ? boxColor : whiteBox,
                         snackPosition: SnackPosition.BOTTOM,
                         isDismissible: true,
                         dismissDirection: DismissDirection.startToEnd,
