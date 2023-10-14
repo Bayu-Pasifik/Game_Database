@@ -12,8 +12,17 @@ class AchievementPageController extends GetxController {
   String? nextArchivment = '';
   final PagingController<int, ArchievementGame> gameAchievement =
       PagingController<int, ArchievementGame>(firstPageKey: 1);
+  var noMoreItems = false.obs;
+  void checkNoMoreItems(bool isLast) {
+    if (isLast == true) {
+      noMoreItems.value = true;
+    } else {
+      noMoreItems.value = false;
+    }
+  }
+
   // ! Archievement Series
-  Future<List<ArchievementGame>> archievementGame(int page) async {
+  void archievementGame(int page) async {
     try {
       Uri url = Uri.parse(
           'https://api.rawg.io/api/games/${models.id}/achievements?key=$apikey&page=$page');
@@ -21,20 +30,19 @@ class AchievementPageController extends GetxController {
       var tempdata = json.decode(response.body)["results"];
       var data = tempdata.map((e) => ArchievementGame.fromJson(e)).toList();
       List<ArchievementGame> achieveData = List<ArchievementGame>.from(data);
-      archievement.addAll(achieveData);
-      print("page key genre action$page");
+      print("page key genre achieve : $page");
       final nextPage = json.decode(response.body)["next"];
-      final isLastPage = nextPage == false;
+      final isLastPage = nextPage == null;
       if (isLastPage) {
-        Get.snackbar("Error", "No more data");
         gameAchievement.appendLastPage(achieveData);
+        checkNoMoreItems(true);
       } else {
         gameAchievement.appendPage(achieveData, page + 1);
+        checkNoMoreItems(false);
       }
     } catch (e) {
       gameAchievement.error = e;
     }
-    return archievement;
   }
 
   @override
@@ -43,5 +51,11 @@ class AchievementPageController extends GetxController {
     gameAchievement.addPageRequestListener((pageKey) {
       archievementGame(pageKey);
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    gameAchievement.dispose();
   }
 }

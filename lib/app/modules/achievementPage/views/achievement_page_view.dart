@@ -58,6 +58,27 @@ class AchievementPageView extends GetView<AchievementPageController> {
                 const Center(child: CircularProgressIndicator()),
             noItemsFoundIndicatorBuilder: (_) =>
                 const Center(child: Text('No Data Available')),
+            noMoreItemsIndicatorBuilder: (_) => Obx(
+              () {
+                if (controller.noMoreItems.value) {
+                  WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                    Get.snackbar("No More Item", "No more Achievement Data",
+                        colorText: textColor,
+                        snackPosition: SnackPosition.BOTTOM,
+                        isDismissible: true,
+                        dismissDirection: DismissDirection.startToEnd,
+                        icon: const Icon(
+                          Icons.error_outline,
+                          color: Colors.red,
+                        ),
+                        shouldIconPulse: true,
+                        barBlur: 1,
+                        duration: const Duration(seconds: 3));
+                  });
+                }
+                return const SizedBox.shrink();
+              },
+            ),
           ),
         ));
   }

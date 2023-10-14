@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:game_database/app/data/constant/color.dart';
 import 'package:game_database/app/data/models/game_models.dart';
 import 'package:game_database/app/routes/app_pages.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import '../controllers/home_controller.dart';
 
 class HomeView extends GetView<HomeController> {
-   const HomeView({Key? key}) : super(key: key);
+  const HomeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -221,6 +222,30 @@ class HomeView extends GetView<HomeController> {
                                       child: CircularProgressIndicator()),
                               noItemsFoundIndicatorBuilder: (_) => const Center(
                                   child: Text('No Data Available')),
+                              noMoreItemsIndicatorBuilder: (_) => Obx(
+                                () {
+                                  if (controller.noMoreItems.value) {
+                                    WidgetsBinding.instance
+                                        .addPostFrameCallback((timeStamp) {
+                                      Get.snackbar("No More Item",
+                                          "No more Achievement Data",
+                                          colorText: textColor,
+                                          snackPosition: SnackPosition.BOTTOM,
+                                          isDismissible: true,
+                                          dismissDirection:
+                                              DismissDirection.startToEnd,
+                                          icon: const Icon(
+                                            Icons.error_outline,
+                                            color: Colors.red,
+                                          ),
+                                          shouldIconPulse: true,
+                                          barBlur: 1,
+                                          duration: const Duration(seconds: 3));
+                                    });
+                                  }
+                                  return const SizedBox.shrink();
+                                },
+                              ),
                             ),
                           );
                         }).toList(),

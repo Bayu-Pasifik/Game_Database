@@ -11,7 +11,6 @@ import 'package:game_database/app/data/models/screenshot_game.dart';
 import 'package:game_database/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:intl/intl.dart';
 import 'package:readmore/readmore.dart';
 
 import '../controllers/detail_game_controller.dart';
@@ -141,7 +140,10 @@ class DetailGameView extends GetView<DetailGameController> {
                                     color: Colors.white,
                                   )),
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Get.toNamed(Routes.WEB_CONTAINER,
+                                      arguments: detail);
+                                },
                                 icon: const FaIcon(
                                   FontAwesomeIcons.globe,
                                   color: Colors.white,

@@ -1,3 +1,4 @@
+import 'package:game_database/app/modules/detail_game/views/web_container.dart';
 import 'package:get/get.dart';
 
 import '../modules/Load_More/bindings/load_more_binding.dart';
@@ -58,5 +59,6 @@ class AppPages {
       page: () => const SimilarPageView(),
       binding: SimilarPageBinding(),
     ),
+    GetPage(name: _Paths.WEB_CONTAINER, page: () => const WebContainer())
   ];
 }

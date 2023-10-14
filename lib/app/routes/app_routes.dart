@@ -9,6 +9,8 @@ abstract class Routes {
   static const SEARCH = _Paths.SEARCH;
   static const ACHIEVEMENT_PAGE = _Paths.ACHIEVEMENT_PAGE;
   static const SIMILAR_PAGE = _Paths.SIMILAR_PAGE;
+  static const WEB_VIEW = _Paths.WEB_VIEW;
+  static const WEB_CONTAINER = _Paths.WEB_CONTAINER;
 }
 
 abstract class _Paths {
@@ -19,4 +21,6 @@ abstract class _Paths {
   static const SEARCH = '/search';
   static const ACHIEVEMENT_PAGE = '/achievement-page';
   static const SIMILAR_PAGE = '/similar-page';
+  static const WEB_VIEW = '/web-view';
+  static const WEB_CONTAINER = '/web-container';
 }
