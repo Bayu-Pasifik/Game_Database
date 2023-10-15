@@ -14,7 +14,7 @@ class WebContainer extends StatelessWidget {
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
       ..loadRequest(Uri.parse(detailGame.website!));
     return Scaffold(
-      appBar: AppBar(title: Text("WebView")),
+      appBar: AppBar(title: Text("Web for ${detailGame.name}")),
       body: WebViewWidget(controller: controller),
     );
   }
