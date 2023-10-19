@@ -26,9 +26,9 @@ class SearchC extends GetxController {
   }
 
   void clearSearch() {
+    listSearch.refresh();
     listSearch.itemList?.clear();
     listSearch.firstPageKey;
-    listSearch.refresh();
   }
 
   final PagingController<int, GameModels> listSearch =

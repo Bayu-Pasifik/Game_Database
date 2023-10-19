@@ -9,8 +9,10 @@ import 'package:get/get.dart';
 // import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../controllers/home_controller.dart';
+import 'package:lottie/lottie.dart';
 
 class HomeView extends GetView<HomeController> {
   const HomeView({Key? key}) : super(key: key);
@@ -22,14 +24,7 @@ class HomeView extends GetView<HomeController> {
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Text("Loading...", style: GoogleFonts.poppins()),
-                SizedBox(height: 10.h),
-                const CircularProgressIndicator(),
-              ],
-            ),
+            child: Lottie.asset('assets/lottie/loading.json'),
           );
         }
 
@@ -64,6 +59,11 @@ class HomeView extends GetView<HomeController> {
                     SizedBox(
                       height: 40.h,
                       child: TextField(
+                        focusNode: FocusNode(
+                            skipTraversal: true,
+                            descendantsAreFocusable: false,
+                            canRequestFocus: false),
+                        readOnly: true,
                         decoration: const InputDecoration(
                             label: Text("Search"),
                             border: OutlineInputBorder(),
@@ -112,141 +112,149 @@ class HomeView extends GetView<HomeController> {
                               ?.addListener(controller.handleTabChange);
                           print("index : $index");
                           return PagedGridView<int, GameModels>(
-                            // padding: EdgeInsets.all(10.w),
-                            pagingController: index == 0
-                                ? controller.actionGame
-                                : index == 1
-                                    ? controller.indieGame
-                                    : index == 2
-                                        ? controller.adventureGame
-                                        : index == 3
-                                            ? controller.rpgGame
-                                            : index == 4
-                                                ? controller.strategyGame
-                                                : index == 5
-                                                    ? controller.shooterGame
-                                                    : index == 6
-                                                        ? controller.casualGame
-                                                        : index == 7
-                                                            ? controller
-                                                                .simulationGame
-                                                            : index == 8
-                                                                ? controller
-                                                                    .puzzleGame
-                                                                : index == 9
-                                                                    ? controller
-                                                                        .arcadeGame
-                                                                    : index ==
-                                                                            10
-                                                                        ? controller
-                                                                            .platformerGame
-                                                                        : index ==
-                                                                                11
-                                                                            ? controller.mmoGame
-                                                                            : index == 12
-                                                                                ? controller.racingGame
-                                                                                : index == 13
-                                                                                    ? controller.sportsGame
-                                                                                    : index == 14
-                                                                                        ? controller.fightingGame
-                                                                                        : index == 15
-                                                                                            ? controller.fammilyGame
-                                                                                            : index == 16
-                                                                                                ? controller.boardGame
-                                                                                                : index == 17
-                                                                                                    ? controller.educationalGame
-                                                                                                    : controller.cardGame,
-
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2.h.toInt(),
-                                    crossAxisSpacing: 10.w,
-                                    mainAxisExtent: 250.h,
-                                    mainAxisSpacing: 20.h),
-                            builderDelegate:
-                                PagedChildBuilderDelegate<GameModels>(
-                              itemBuilder: (context, game, index) {
-                                return Column(
-                                  children: [
-                                    Expanded(
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Get.toNamed(Routes.DETAIL_GAME,
-                                              arguments: game);
-                                        },
-                                        child: CachedNetworkImage(
-                                          imageUrl: "${game.backgroundImage}",
-                                          imageBuilder:
-                                              (context, imageProvider) =>
-                                                  Container(
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8),
-                                              image: DecorationImage(
-                                                  image: imageProvider,
-                                                  fit: BoxFit.cover),
+                              // padding: EdgeInsets.all(10.w),
+                              pagingController: index == 0
+                                  ? controller.actionGame
+                                  : index == 1
+                                      ? controller.indieGame
+                                      : index == 2
+                                          ? controller.adventureGame
+                                          : index == 3
+                                              ? controller.rpgGame
+                                              : index == 4
+                                                  ? controller.strategyGame
+                                                  : index == 5
+                                                      ? controller.shooterGame
+                                                      : index == 6
+                                                          ? controller
+                                                              .casualGame
+                                                          : index == 7
+                                                              ? controller
+                                                                  .simulationGame
+                                                              : index == 8
+                                                                  ? controller
+                                                                      .puzzleGame
+                                                                  : index == 9
+                                                                      ? controller
+                                                                          .arcadeGame
+                                                                      : index ==
+                                                                              10
+                                                                          ? controller
+                                                                              .platformerGame
+                                                                          : index == 11
+                                                                              ? controller.mmoGame
+                                                                              : index == 12
+                                                                                  ? controller.racingGame
+                                                                                  : index == 13
+                                                                                      ? controller.sportsGame
+                                                                                      : index == 14
+                                                                                          ? controller.fightingGame
+                                                                                          : index == 15
+                                                                                              ? controller.fammilyGame
+                                                                                              : index == 16
+                                                                                                  ? controller.boardGame
+                                                                                                  : index == 17
+                                                                                                      ? controller.educationalGame
+                                                                                                      : controller.cardGame,
+                              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2.h.toInt(), crossAxisSpacing: 10.w, mainAxisExtent: 250.h, mainAxisSpacing: 20.h),
+                              builderDelegate: PagedChildBuilderDelegate<GameModels>(
+                                itemBuilder: (context, game, index) {
+                                  return Column(
+                                    children: [
+                                      Expanded(
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            Get.toNamed(Routes.DETAIL_GAME,
+                                                arguments: game);
+                                          },
+                                          child: CachedNetworkImage(
+                                            imageUrl: "${game.backgroundImage}",
+                                            imageBuilder:
+                                                (context, imageProvider) =>
+                                                    Container(
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                image: DecorationImage(
+                                                    image: imageProvider,
+                                                    fit: BoxFit.cover),
+                                              ),
                                             ),
+                                            progressIndicatorBuilder: (context,
+                                                    url, downloadProgress) =>
+                                                Center(
+                                              child: CircularProgressIndicator(
+                                                  value: downloadProgress
+                                                      .progress),
+                                            ),
+                                            errorWidget: (context, url,
+                                                    error) =>
+                                                Image.asset(
+                                                    "assets/images/Image_not_available.png"),
                                           ),
-                                          progressIndicatorBuilder: (context,
-                                                  url, downloadProgress) =>
-                                              Center(
-                                            child: CircularProgressIndicator(
-                                                value:
-                                                    downloadProgress.progress),
-                                          ),
-                                          errorWidget: (context, url, error) =>
-                                              Image.asset(
-                                                  "assets/images/Image_not_available.png"),
                                         ),
                                       ),
-                                    ),
-                                    Text(
-                                      "${game.name}",
-                                      style: GoogleFonts.poppins(
-                                          textStyle: const TextStyle(
-                                              overflow: TextOverflow.ellipsis)),
-                                    ),
-                                    (game.playtime != null)
-                                        ? Text(
-                                            "${game.playtime} Hours",
-                                            style: GoogleFonts.poppins(),
-                                          )
-                                        : Text("Null",
-                                            style: GoogleFonts.poppins())
-                                  ],
-                                );
-                              },
-                              firstPageProgressIndicatorBuilder: (_) =>
-                                  const Center(
-                                      child: CircularProgressIndicator()),
-                              noItemsFoundIndicatorBuilder: (_) => const Center(
-                                  child: Text('No Data Available')),
-                              noMoreItemsIndicatorBuilder: (_) => Obx(
-                                () {
-                                  if (controller.noMoreItems.value) {
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback((timeStamp) {
-                                      Get.snackbar("No More Item",
-                                          "No more Achievement Data",
-                                          colorText: darkTextColor,
-                                          snackPosition: SnackPosition.BOTTOM,
-                                          isDismissible: true,
-                                          dismissDirection:
-                                              DismissDirection.startToEnd,
-                                          icon: const Icon(
-                                            Icons.error_outline,
-                                            color: Colors.red,
-                                          ),
-                                          shouldIconPulse: true,
-                                          barBlur: 1,
-                                          duration: const Duration(seconds: 3));
-                                    });
-                                  }
-                                  return const SizedBox.shrink();
+                                      Text(
+                                        "${game.name}",
+                                        style: GoogleFonts.poppins(
+                                            textStyle: const TextStyle(
+                                                overflow:
+                                                    TextOverflow.ellipsis)),
+                                      ),
+                                      (game.playtime != null)
+                                          ? Text(
+                                              "${game.playtime} Hours",
+                                              style: GoogleFonts.poppins(),
+                                            )
+                                          : Text("Null",
+                                              style: GoogleFonts.poppins())
+                                    ],
+                                  );
                                 },
-                              ),
-                            ),
-                          );
+                                firstPageProgressIndicatorBuilder: (_) =>
+                                    Center(
+                                        child: LoadingAnimationWidget
+                                            .twoRotatingArc(
+                                                color: isDarkmode.isTrue
+                                                    ? boxColor
+                                                    : whiteBox,
+                                                size: 70)),
+                                noItemsFoundIndicatorBuilder: (_) =>
+                                    const Center(
+                                        child: Text('No Data Available')),
+                                noMoreItemsIndicatorBuilder: (_) => Obx(
+                                  () {
+                                    if (controller.noMoreItems.value) {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback((timeStamp) {
+                                        Get.snackbar("No More Item",
+                                            "No more Achievement Data",
+                                            colorText: darkTextColor,
+                                            snackPosition: SnackPosition.BOTTOM,
+                                            isDismissible: true,
+                                            dismissDirection:
+                                                DismissDirection.startToEnd,
+                                            icon: const Icon(
+                                              Icons.error_outline,
+                                              color: Colors.red,
+                                            ),
+                                            shouldIconPulse: true,
+                                            barBlur: 1,
+                                            duration:
+                                                const Duration(seconds: 3));
+                                      });
+                                    }
+                                    return const SizedBox.shrink();
+                                  },
+                                ),
+                                newPageProgressIndicatorBuilder: (_) => Center(
+                                  child: LoadingAnimationWidget.twoRotatingArc(
+                                      color: isDarkmode.isTrue
+                                          ? boxColor
+                                          : whiteBox,
+                                      size: 70),
+                                ),
+                              ));
                         }).toList(),
                       ),
                     ),

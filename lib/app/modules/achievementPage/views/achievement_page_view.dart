@@ -8,6 +8,7 @@ import 'package:game_database/app/data/models/game_models.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 import '../controllers/achievement_page_controller.dart';
 
@@ -56,8 +57,9 @@ class AchievementPageView extends GetView<AchievementPageController> {
                 ),
               );
             },
-            firstPageProgressIndicatorBuilder: (_) =>
-                const Center(child: CircularProgressIndicator()),
+            firstPageProgressIndicatorBuilder: (_) => Center(
+                child: LoadingAnimationWidget.twoRotatingArc(
+                    color: isDarkmode.isTrue ? boxColor : whiteBox, size: 70)),
             noItemsFoundIndicatorBuilder: (_) =>
                 const Center(child: Text('No Data Available')),
             noMoreItemsIndicatorBuilder: (_) => Obx(
@@ -83,6 +85,10 @@ class AchievementPageView extends GetView<AchievementPageController> {
                 }
                 return const SizedBox.shrink();
               },
+            ),
+            newPageProgressIndicatorBuilder: (_) => Center(
+              child: LoadingAnimationWidget.twoRotatingArc(
+                  color: isDarkmode.isTrue ? boxColor : whiteBox, size: 70),
             ),
           ),
         ));

@@ -12,6 +12,8 @@ import 'package:game_database/app/data/models/screenshot_game.dart';
 import 'package:game_database/app/routes/app_pages.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
+import 'package:lottie/lottie.dart';
 import 'package:readmore/readmore.dart';
 
 import '../controllers/detail_game_controller.dart';
@@ -32,7 +34,8 @@ class DetailGameView extends GetView<DetailGameController> {
               future: controller.details(models.id!),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(child: CircularProgressIndicator());
+                  return  Center(child: LoadingAnimationWidget.twoRotatingArc(
+                    color: isDarkmode.isTrue ? boxColor : whiteBox, size: 70));
                 } else if (snapshot.hasError) {
                   return Center(child: Text('Error: ${snapshot.error}'));
                 } else if (!snapshot.hasData) {
@@ -50,8 +53,9 @@ class DetailGameView extends GetView<DetailGameController> {
                         builder: (context, snapshot) {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
-                            return const Center(
-                                child: CircularProgressIndicator());
+                            return  Center(
+                                child: LoadingAnimationWidget.twoRotatingArc(
+                    color: isDarkmode.isTrue ? boxColor : whiteBox, size: 70));
                           } else if (snapshot.hasError) {
                             return Center(
                                 child: Text('Error: ${snapshot.error}'));
@@ -591,8 +595,9 @@ class DetailGameView extends GetView<DetailGameController> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                              return  Center(
+                                  child: LoadingAnimationWidget.twoRotatingArc(
+                    color: isDarkmode.isTrue ? boxColor : whiteBox, size: 70));
                             } else if (snapshot.hasError) {
                               return Center(
                                   child: Text('Error: ${snapshot.error}'));
@@ -676,8 +681,9 @@ class DetailGameView extends GetView<DetailGameController> {
                           builder: (context, snapshot) {
                             if (snapshot.connectionState ==
                                 ConnectionState.waiting) {
-                              return const Center(
-                                  child: CircularProgressIndicator());
+                              return  Center(
+                                  child: LoadingAnimationWidget.twoRotatingArc(
+                    color: isDarkmode.isTrue ? boxColor : whiteBox, size: 70));
                             } else if (snapshot.hasError) {
                               return Center(
                                   child: Text('Error: ${snapshot.error}'));
@@ -782,13 +788,7 @@ class DetailGameView extends GetView<DetailGameController> {
               centerTitle: true,
               backgroundColor: (isDarkmode.isTrue) ? boxColor : whiteBox,
             ),
-            body: Center(
-              child: Text(
-                "No Data",
-                style: GoogleFonts.poppins(
-                    fontSize: 20, fontWeight: FontWeight.bold),
-              ),
-            ),
+            body: Center(child: Lottie.asset("assets/lottie/not_found.json")),
           );
   }
 }
